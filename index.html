@@ -9,11 +9,10 @@
 <body>
   <div id="container"></div>
   <script type="module">
-    // Importing Three.js and ARButton as modules
-    import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/155/three.module.min.js';
-    import { ARButton } from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/155/examples/jsm/webxr/ARButton.js';
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.module.js';
+    import { ARButton } from 'https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/webxr/ARButton.js';
 
-    // Importing and running the application
+    // Import the main application logic
     import { startApp } from './script.js';
     startApp(THREE, ARButton);
   </script>

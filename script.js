@@ -1,5 +1,5 @@
 export function startApp(THREE, ARButton) {
-  // Setup basic Three.js scene
+  // Basic Three.js scene setup
   const container = document.getElementById('container');
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -9,7 +9,7 @@ export function startApp(THREE, ARButton) {
   renderer.xr.enabled = true; // Enable WebXR
   container.appendChild(renderer.domElement);
 
-  // Add AR button to enable AR mode
+  // Add AR button
   document.body.appendChild(ARButton.createButton(renderer));
 
   // Add lighting
@@ -20,7 +20,7 @@ export function startApp(THREE, ARButton) {
   pointLight.position.set(5, 5, 5);
   scene.add(pointLight);
 
-  // Create the main hologram panel
+  // Create main hologram panel
   const mainPanelMaterial = new THREE.MeshStandardMaterial({
     color: 0x00ffff,
     transparent: true,
@@ -33,7 +33,7 @@ export function startApp(THREE, ARButton) {
   mainPanel.position.set(0, 1.5, -2);
   scene.add(mainPanel);
 
-  // Load and add text to the main panel
+  // Load and add text to the panel
   const loader = new THREE.FontLoader();
   loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
     const textGeometry = new THREE.TextGeometry('Your Name\nAR/VR Developer', {
@@ -79,7 +79,7 @@ export function startApp(THREE, ARButton) {
     parent.add(panel);
   });
 
-  // Add glowing orbiting particles
+  // Add orbiting particles
   const particleCount = 100;
   const particleGeometry = new THREE.BufferGeometry();
   const particlePositions = [];
