@@ -3,16 +3,13 @@ export function startApp(THREE, ARButton) {
   const container = document.getElementById('container');
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-
-  // WebGL renderer with WebXR enabled
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.xr.enabled = true; // Enable WebXR
+  renderer.xr.enabled = true;
   container.appendChild(renderer.domElement);
 
   // Add AR button
-  const arButton = ARButton.createButton(renderer);
-  document.body.appendChild(arButton);
+  document.body.appendChild(ARButton.createButton(renderer));
 
   // Lighting
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -22,105 +19,107 @@ export function startApp(THREE, ARButton) {
   pointLight.position.set(5, 5, 5);
   scene.add(pointLight);
 
-  // Add main card
-  const textureLoader = new THREE.TextureLoader();
-  const cardTexture = textureLoader.load('path/to/card_texture.png'); // Replace with your image path
+  // Add Solar System
+  const solarSystem = new THREE.Object3D();
+  scene.add(solarSystem);
 
-  const mainPanelMaterial = new THREE.MeshStandardMaterial({
-    map: cardTexture, // Apply texture
-    transparent: true,
-    opacity: 1,
-  });
+  // Sun
+  const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffcc00 });
+  const sun = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), sunMaterial);
+  solarSystem.add(sun);
 
-  const mainPanel = new THREE.Mesh(new THREE.PlaneGeometry(2, 1), mainPanelMaterial);
-  mainPanel.position.set(0, 0.5, -1); // Position the card lower and closer
-  scene.add(mainPanel);
+  // Planets
+  const planets = [];
+  const planetMaterials = [
+    new THREE.MeshBasicMaterial({ color: 0x3366ff }), // Blue planet
+    new THREE.MeshBasicMaterial({ color: 0x00cc44 }), // Green planet
+    new THREE.MeshBasicMaterial({ color: 0xcc4400 }), // Red planet
+  ];
 
-  // Add particles
-  const particleCount = 100;
-  const particleGeometry = new THREE.BufferGeometry();
-  const particlePositions = [];
-
-  for (let i = 0; i < particleCount; i++) {
-    const angle = Math.random() * Math.PI * 2;
-    const radius = 1.5 + Math.random() * 0.5;
-    const y = Math.random() * 1 - 0.5;
-    particlePositions.push(
-      Math.cos(angle) * radius,
-      y,
-      Math.sin(angle) * radius
-    );
+  for (let i = 0; i < 3; i++) {
+    const planetOrbit = new THREE.Object3D();
+    const planet = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), planetMaterials[i]);
+    planet.position.set((i + 1) * 1.5, 0, 0);
+    planetOrbit.add(planet);
+    solarSystem.add(planetOrbit);
+    planets.push({ planet, orbit: planetOrbit });
   }
 
-  particleGeometry.setAttribute(
-    'position',
-    new THREE.Float32BufferAttribute(particlePositions, 3)
-  );
+  // Add Flying Saucer
+  const saucerMaterial = new THREE.MeshBasicMaterial({ color: 0x888888 });
+  const saucer = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), saucerMaterial);
+  saucer.position.set(3, 0.5, 0);
+  scene.add(saucer);
 
-  const particleMaterial = new THREE.PointsMaterial({
-    color: 0x00ffff,
-    size: 0.05,
-    transparent: true,
-    opacity: 0.8,
+  // Interactive Card
+  const cardMaterial = new THREE.MeshStandardMaterial({ color: 0x001f3f, side: THREE.DoubleSide });
+  const card = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1), cardMaterial);
+  card.position.set(0, 0.5, -1);
+  scene.add(card);
+
+  // Add text to card
+  const loader = new THREE.FontLoader();
+  loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
+    const textGeometry = new THREE.TextGeometry('Brandon Montezuma', {
+      font: font,
+      size: 0.1,
+      height: 0.01,
+    });
+
+    const textMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+    textMesh.position.set(-0.7, 0.3, 0.01);
+    card.add(textMesh);
   });
 
-  const particles = new THREE.Points(particleGeometry, particleMaterial);
-  scene.add(particles);
+  // Add tabs
+  const tabNames = ['ArtStation', 'Website', 'GitHub', 'Contact'];
+  const tabs = [];
 
-  // Add background
-  const bgGeometry = new THREE.PlaneGeometry(10, 10);
-  const bgMaterial = new THREE.MeshBasicMaterial({
-    color: 0x001f3f, // Dark blue background
-    transparent: true,
-    opacity: 0.5,
+  tabNames.forEach((name, i) => {
+    const tab = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.5, 0.2),
+      new THREE.MeshStandardMaterial({ color: 0x0066cc })
+    );
+    tab.position.set(-0.6 + i * 0.4, -0.2, 0.01);
+    card.add(tab);
+
+    loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
+      const tabTextGeometry = new THREE.TextGeometry(name, {
+        font: font,
+        size: 0.05,
+        height: 0.01,
+      });
+      const tabTextMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+      const tabText = new THREE.Mesh(tabTextGeometry, tabTextMaterial);
+      tabText.position.set(-0.2, -0.05, 0.02);
+      tab.add(tabText);
+      tabs.push(tab);
+    });
   });
 
-  const background = new THREE.Mesh(bgGeometry, bgMaterial);
-  background.position.set(0, 0, -5); // Place far behind the scene
-  scene.add(background);
+  // Add background music
+  const audio = new Audio('path/to/music.mp3'); // Replace with your music file
+  audio.loop = true;
+  audio.play();
 
-  // Animation variables
-  let particleRotationAngle = 0;
-  let scaleDirection = 1;
-
-  // Handle interactions
-  const raycaster = new THREE.Raycaster();
-  const pointer = new THREE.Vector2();
-
-  window.addEventListener('pointerdown', (event) => {
-    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-    pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-    raycaster.setFromCamera(pointer, camera);
-    const intersects = raycaster.intersectObject(mainPanel);
-
-    if (intersects.length > 0) {
-      alert('Card clicked! Replace with your interaction.');
-    }
-  });
-
-  // Animation loop
+  // Animation
   function animate() {
-    // Animate particles
-    particleRotationAngle += 0.01;
-    particles.rotation.y = particleRotationAngle;
+    solarSystem.rotation.y += 0.002; // Rotate the solar system
+    planets.forEach(({ planet, orbit }) => {
+      orbit.rotation.y += 0.005; // Orbit the planet
+      planet.rotation.y += 0.01; // Rotate the planet on its axis
+    });
 
-    // Scale card for a pulsing effect
-    mainPanel.scale.x += 0.005 * scaleDirection;
-    mainPanel.scale.y += 0.005 * scaleDirection;
-    if (mainPanel.scale.x > 1.1 || mainPanel.scale.x < 1) {
-      scaleDirection *= -1; // Reverse direction
-    }
-
-    // Ensure card faces the camera
-    mainPanel.lookAt(camera.position);
+    saucer.rotation.y += 0.01; // Rotate the saucer
+    saucer.position.x = Math.sin(Date.now() * 0.001) * 3; // Move saucer back and forth
 
     renderer.render(scene, camera);
   }
 
   renderer.setAnimationLoop(animate);
 
-  // Handle window resizing
+  // Handle resizing
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
