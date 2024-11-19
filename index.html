@@ -4,16 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AR Hologram Business Card</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
   <div id="container"></div>
-  <!-- Three.js library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js"></script>
-  <!-- WebXR ARButton -->
-  <script src="https://cdn.jsdelivr.net/npm/three/examples/js/webxr/ARButton.js"></script>
-  <!-- Application script -->
-  <script src="script.js"></script>
+  <script type="module">
+    // Importing Three.js and ARButton as modules
+    import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/155/three.module.min.js';
+    import { ARButton } from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/155/examples/jsm/webxr/ARButton.js';
+
+    // Importing and running the application
+    import { startApp } from './script.js';
+    startApp(THREE, ARButton);
+  </script>
 </body>
 </html>
 
