@@ -1,5 +1,5 @@
 export function startApp(THREE, ARButton) {
-  // Create the Three.js scene
+  // Basic Three.js scene setup
   const container = document.getElementById('container');
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -10,9 +10,13 @@ export function startApp(THREE, ARButton) {
   renderer.xr.enabled = true; // Enable WebXR
   container.appendChild(renderer.domElement);
 
-  // Add AR button to the page
-  const arButton = ARButton.createButton(renderer);
-  document.body.appendChild(arButton);
+  // Safely check and add AR button
+  if (ARButton && typeof ARButton.createButton === 'function') {
+    const arButton = ARButton.createButton(renderer);
+    document.body.appendChild(arButton);
+  } else {
+    console.error('ARButton or createButton is not defined');
+  }
 
   // Add lighting
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -22,7 +26,7 @@ export function startApp(THREE, ARButton) {
   pointLight.position.set(5, 5, 5);
   scene.add(pointLight);
 
-  // Add a basic object to the scene (main hologram panel)
+  // Add a simple hologram panel
   const mainPanelMaterial = new THREE.MeshStandardMaterial({
     color: 0x00ffff,
     transparent: true,
@@ -35,7 +39,7 @@ export function startApp(THREE, ARButton) {
   mainPanel.position.set(0, 1.5, -2);
   scene.add(mainPanel);
 
-  // Add animation loop
+  // Animation loop
   function animate() {
     renderer.render(scene, camera);
   }
