@@ -25,7 +25,7 @@ export function startApp(THREE, ARButton) {
 
   // Sun
   const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffcc00 });
-  const sun = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), sunMaterial);
+  const sun = new THREE.Mesh(new THREE.SphereGeometry(0.2, 32, 32), sunMaterial); // Reduced size
   solarSystem.add(sun);
 
   // Planets
@@ -38,8 +38,8 @@ export function startApp(THREE, ARButton) {
 
   for (let i = 0; i < 3; i++) {
     const planetOrbit = new THREE.Object3D();
-    const planet = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), planetMaterials[i]);
-    planet.position.set((i + 1) * 1.5, 0, 0);
+    const planet = new THREE.Mesh(new THREE.SphereGeometry(0.05, 16, 16), planetMaterials[i]); // Smaller planets
+    planet.position.set((i + 1) * 0.5, 0, 0); // Spread planets closer to the sun
     planetOrbit.add(planet);
     solarSystem.add(planetOrbit);
     planets.push({ planet, orbit: planetOrbit });
@@ -47,14 +47,14 @@ export function startApp(THREE, ARButton) {
 
   // Add Flying Saucer
   const saucerMaterial = new THREE.MeshBasicMaterial({ color: 0x888888 });
-  const saucer = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), saucerMaterial);
-  saucer.position.set(3, 0.5, 0);
+  const saucer = new THREE.Mesh(new THREE.SphereGeometry(0.05, 16, 16), saucerMaterial); // Reduced size
+  saucer.position.set(1, 0.2, 0);
   scene.add(saucer);
 
   // Interactive Card
   const cardMaterial = new THREE.MeshStandardMaterial({ color: 0x001f3f, side: THREE.DoubleSide });
-  const card = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1), cardMaterial);
-  card.position.set(0, 0.5, -1);
+  const card = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 0.5), cardMaterial); // Smaller card
+  card.position.set(0, 0.2, -1); // Lowered card position
   scene.add(card);
 
   // Add text to card
@@ -62,13 +62,13 @@ export function startApp(THREE, ARButton) {
   loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
     const textGeometry = new THREE.TextGeometry('Brandon Montezuma', {
       font: font,
-      size: 0.1,
+      size: 0.05, // Smaller text
       height: 0.01,
     });
 
     const textMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
     const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-    textMesh.position.set(-0.7, 0.3, 0.01);
+    textMesh.position.set(-0.35, 0.1, 0.01); // Adjust position on the card
     card.add(textMesh);
   });
 
@@ -78,21 +78,21 @@ export function startApp(THREE, ARButton) {
 
   tabNames.forEach((name, i) => {
     const tab = new THREE.Mesh(
-      new THREE.PlaneGeometry(0.5, 0.2),
+      new THREE.PlaneGeometry(0.3, 0.1), // Smaller tabs
       new THREE.MeshStandardMaterial({ color: 0x0066cc })
     );
-    tab.position.set(-0.6 + i * 0.4, -0.2, 0.01);
+    tab.position.set(-0.35 + i * 0.4, -0.15, 0.01);
     card.add(tab);
 
     loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
       const tabTextGeometry = new THREE.TextGeometry(name, {
         font: font,
-        size: 0.05,
+        size: 0.03, // Smaller text for tabs
         height: 0.01,
       });
       const tabTextMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
       const tabText = new THREE.Mesh(tabTextGeometry, tabTextMaterial);
-      tabText.position.set(-0.2, -0.05, 0.02);
+      tabText.position.set(-0.1, -0.03, 0.02);
       tab.add(tabText);
       tabs.push(tab);
     });
@@ -105,14 +105,14 @@ export function startApp(THREE, ARButton) {
 
   // Animation
   function animate() {
-    solarSystem.rotation.y += 0.002; // Rotate the solar system
+    solarSystem.rotation.y += 0.01; // Rotate the solar system
     planets.forEach(({ planet, orbit }) => {
-      orbit.rotation.y += 0.005; // Orbit the planet
-      planet.rotation.y += 0.01; // Rotate the planet on its axis
+      orbit.rotation.y += 0.02; // Orbit the planet
+      planet.rotation.y += 0.03; // Rotate the planet on its axis
     });
 
-    saucer.rotation.y += 0.01; // Rotate the saucer
-    saucer.position.x = Math.sin(Date.now() * 0.001) * 3; // Move saucer back and forth
+    saucer.rotation.y += 0.02; // Rotate the saucer
+    saucer.position.x = Math.sin(Date.now() * 0.001) * 0.8; // Move saucer back and forth
 
     renderer.render(scene, camera);
   }
