@@ -9,12 +9,13 @@
 <body>
   <div id="container"></div>
   <script type="module">
+    // Import Three.js and ARButton
     import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.module.js';
     import { ARButton } from 'https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/webxr/ARButton.js';
 
-    // Import the main application logic
+    // Import the application logic
     import { startApp } from './script.js';
-    startApp(THREE, ARButton);
+    startApp(THREE, ARButton); // Pass the modules to the main script
   </script>
 </body>
 </html>
