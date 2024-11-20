@@ -1,89 +1,53 @@
-let scene, camera, renderer, card, particleSystem;
+document.addEventListener('DOMContentLoaded', () => {
+    const startARButton = document.getElementById('start-ar');
+    const arOverlay = document.getElementById('ar-overlay');
+    const arScene = document.getElementById('ar-scene');
 
-function startAR() {
-  // Hide the intro section
-  document.getElementById('intro').style.display = 'none';
-  document.getElementById('ar-container').style.display = 'block';
+    // WebXR Setup
+    if ('xr' in navigator) {
+        startARButton.addEventListener('click', async () => {
+            try {
+                const xrSession = await navigator.xr.requestSession('immersive-ar');
+                xrSession.addEventListener('end', () => {
+                    arOverlay.classList.add('hidden');
+                });
 
-  initARCard();
-}
+                const canvas = document.createElement('canvas');
+                arScene.appendChild(canvas);
 
-// Initialize Three.js for AR experience
-function initARCard() {
-  // Scene
-  scene = new THREE.Scene();
+                const gl = canvas.getContext('webgl', { xrCompatible: true });
+                const renderer = new THREE.WebGLRenderer({
+                    canvas: canvas,
+                    context: gl
+                });
 
-  // Camera
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 0, 5);
+                // 3D Business Card Scene
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-  // Renderer
-  renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('ar-card'), alpha: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
+                // Create a floating 3D business card
+                const cardGeometry = new THREE.PlaneGeometry(1, 0.6);
+                const cardTexture = new THREE.TextureLoader().load('business-card-texture.png');
+                const cardMaterial = new THREE.MeshBasicMaterial({ map: cardTexture });
+                const cardMesh = new THREE.Mesh(cardGeometry, cardMaterial);
+                scene.add(cardMesh);
 
-  // Card Background
-  const cardGeometry = new THREE.PlaneGeometry(3, 2);
-  const cardMaterial = new THREE.MeshStandardMaterial({
-    color: 0x111111,
-    transparent: true,
-    opacity: 0.7,
-    side: THREE.DoubleSide,
-  });
-  card = new THREE.Mesh(cardGeometry, cardMaterial);
-  scene.add(card);
+                // Animate card
+                function animate() {
+                    cardMesh.rotation.y += 0.01;
+                    renderer.render(scene, camera);
+                    xrSession.requestAnimationFrame(animate);
+                }
 
-  // Add particle effects
-  createParticles();
-
-  // Lights
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-  const pointLight = new THREE.PointLight(0x00d4ff, 1, 100);
-  pointLight.position.set(5, 5, 5);
-  scene.add(ambientLight, pointLight);
-
-  animate();
-}
-
-// Create particle effects
-function createParticles() {
-  const particleCount = 300;
-  const particlesGeometry = new THREE.BufferGeometry();
-  const particlesMaterial = new THREE.PointsMaterial({
-    color: 0x00d4ff,
-    size: 0.05,
-    transparent: true,
-  });
-
-  const positions = [];
-  for (let i = 0; i < particleCount; i++) {
-    positions.push((Math.random() - 0.5) * 5);
-    positions.push((Math.random() - 0.5) * 5);
-    positions.push((Math.random() - 0.5) * 5);
-  }
-
-  particlesGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-  particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
-  scene.add(particleSystem);
-}
-
-// Animation loop
-function animate() {
-  requestAnimationFrame(animate);
-
-  // Rotate particles for effect
-  if (particleSystem) {
-    particleSystem.rotation.y += 0.005;
-  }
-
-  renderer.render(scene, camera);
-}
-
-// Handle resizing
-window.addEventListener('resize', () => {
-  if (camera && renderer) {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  }
+                xrSession.requestAnimationFrame(animate);
+                arOverlay.classList.remove('hidden');
+            } catch (error) {
+                console.error('WebXR not supported', error);
+                alert('WebXR is not supported on this device.');
+            }
+        });
+    } else {
+        startARButton.textContent = 'WebXR Not Supported';
+        startARButton.style.backgroundColor = 'red';
+    }
 });
-
