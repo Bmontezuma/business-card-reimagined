@@ -1,90 +1,131 @@
-// Simplified AR Business Card Script
-const initAR = () => {
-  // Hide the landing page and show the AR container
-  document.getElementById("landing-page").style.display = "none";
-  document.getElementById("ar-container").style.display = "block";
+let scene, camera, renderer, card, particleSystem;
 
-  // Check for WebXR support
-  if ('xr' in navigator) {
-    // Set up Scene, Camera, Renderer
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.xr.enabled = true;
-    document.getElementById("ar-container").appendChild(renderer.domElement);
+// Initialize AR Card
+function initARCard() {
+  // Create Scene
+  scene = new THREE.Scene();
+  
+  // Camera
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 0, 5);
 
-    // Lighting
-    const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
-    scene.add(light);
+  // Renderer
+  renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('ar-card'), alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // Business Card
-    const planeGeometry = new THREE.PlaneGeometry(1, 0.5);
-    const planeMaterial = new THREE.MeshBasicMaterial({ color: 0x333366, side: THREE.DoubleSide });
-    const card = new THREE.Mesh(planeGeometry, planeMaterial);
-    card.position.set(0, 0, -1.5);
-    scene.add(card);
+  // Card - Holographic Pane
+  const cardGeometry = new THREE.PlaneGeometry(3, 2);
+  const cardMaterial = new THREE.MeshStandardMaterial({
+    color: 0x111111,
+    transparent: true,
+    opacity: 0.7,
+    side: THREE.DoubleSide,
+  });
+  card = new THREE.Mesh(cardGeometry, cardMaterial);
+  scene.add(card);
 
-    // Tabs (Icons)
-    const tabData = [
-      { label: "ArtStation", icon: "assets/icons/artstation.png", url: "https://www.artstation.com/brandonmontezuma6" },
-      { label: "Instagram", icon: "assets/icons/instagram.png", url: "https://www.instagram.com/montezumashare/" },
-      { label: "Wix", icon: "assets/icons/wix.png", url: "https://brandonmontezuma.wixsite.com/brandon-montezuma-3" },
-      { label: "GitHub", icon: "assets/icons/github.png", url: "https://github.com/Bmontezuma" },
-      { label: "LinkedIn", icon: "assets/icons/linkedin.png", url: "https://www.linkedin.com/in/brandon-montezuma/" },
-      { label: "Contact", icon: "assets/icons/contact.png", url: "#" },
-    ];
+  // Add platform sections
+  addPlatformSections();
 
-    const tabGroup = new THREE.Group();
-    
-    // Use TextureLoader with error handling
-    const textureLoader = new THREE.TextureLoader();
-    
-    tabData.forEach((tab, index) => {
-      textureLoader.load(
-        tab.icon,
-        (texture) => {
-          const material = new THREE.MeshBasicMaterial({ map: texture });
-          const geometry = new THREE.CircleGeometry(0.1, 32);
-          const icon = new THREE.Mesh(geometry, material);
-          icon.position.set(-0.5 + index * 0.2, -0.35, -1.5);
-          icon.userData = { url: tab.url };
-          tabGroup.add(icon);
-        },
-        undefined,
-        (error) => {
-          console.error('Error loading texture', error);
-        }
-      );
+  // Add particle effects
+  createParticles();
+
+  // Lights
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  const pointLight = new THREE.PointLight(0x00d4ff, 1, 100);
+  pointLight.position.set(5, 5, 5);
+  scene.add(ambientLight, pointLight);
+
+  // Animate
+  animate();
+}
+
+// Function to add platform sections (LinkedIn, GitHub, etc.)
+function addPlatformSections() {
+  const platforms = [
+    { name: "ArtStation", position: { x: -1.2, y: 0.8, z: 0.1 } },
+    { name: "LinkedIn", position: { x: 1.2, y: 0.8, z: 0.1 } },
+    { name: "Contact", position: { x: -1.2, y: -0.2, z: 0.1 } },
+    { name: "GitHub", position: { x: 1.2, y: -0.2, z: 0.1 } },
+    { name: "Resume", position: { x: -1.2, y: -1.2, z: 0.1 } },
+    { name: "Instagram", position: { x: 1.2, y: -1.2, z: 0.1 } },
+    { name: "Facebook", position: { x: 0, y: -1.8, z: 0.1 } },
+  ];
+
+  platforms.forEach(({ name, position }) => {
+    // Placeholder for icons or text labels
+    const labelGeometry = new THREE.PlaneGeometry(0.6, 0.3);
+    const labelMaterial = new THREE.MeshBasicMaterial({
+      color: 0x00d4ff,
+      transparent: true,
+      opacity: 0.5,
     });
 
-    scene.add(tabGroup);
+    const label = new THREE.Mesh(labelGeometry, labelMaterial);
+    label.position.set(position.x, position.y, position.z);
+    scene.add(label);
 
-    // Handle Clicks
-    renderer.domElement.addEventListener("click", (event) => {
-      const raycaster = new THREE.Raycaster();
-      const pointer = new THREE.Vector2();
-      pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-      pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-      raycaster.setFromCamera(pointer, camera);
-      const intersects = raycaster.intersectObjects(tabGroup.children);
-      
-      if (intersects.length > 0) {
-        const url = intersects[0].object.userData.url;
-        if (url && url !== "#") window.open(url, "_blank");
-      }
-    });
+    // Placeholder for text (using CSS2DRenderer or BitmapText if needed)
+    const loader = new THREE.TextureLoader();
+    loader.load(
+      `./assets/${name.toLowerCase()}.png`, // Path to icon images
+      (texture) => {
+        label.material.map = texture;
+        label.material.needsUpdate = true;
+      },
+      undefined,
+      () => console.error(`Failed to load ${name} icon.`)
+    );
+  });
+}
 
-    // Animate
-    renderer.setAnimationLoop(() => {
-      renderer.render(scene, camera);
-    });
+// Function to create particle effects
+function createParticles() {
+  const particleCount = 200;
+  const particlesGeometry = new THREE.BufferGeometry();
+  const particlesMaterial = new THREE.PointsMaterial({
+    color: 0x00d4ff,
+    size: 0.05,
+    transparent: true,
+  });
 
-  } else {
-    alert("WebXR not supported in this browser");
+  // Particle positions
+  const positions = [];
+  for (let i = 0; i < particleCount; i++) {
+    positions.push((Math.random() - 0.5) * 5);
+    positions.push((Math.random() - 0.5) * 5);
+    positions.push((Math.random() - 0.5) * 5);
   }
-};
 
-// Add Event Listener for the Start Button
-document.getElementById("start-ar-button").addEventListener("click", initAR);
+  particlesGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
+  scene.add(particleSystem);
+}
+
+// Animation loop
+function animate() {
+  requestAnimationFrame(animate);
+
+  // Rotate the card and particles
+  card.rotation.y += 0.01;
+  if (particleSystem) particleSystem.rotation.y += 0.005;
+
+  renderer.render(scene, camera);
+}
+
+// Start AR on button click
+function startAR() {
+  document.getElementById('start-ar').style.display = 'none';
+  document.getElementById('card-container').style.display = 'block';
+  initARCard();
+}
+
+// Handle resizing
+window.addEventListener('resize', () => {
+  if (camera && renderer) {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+});
+
