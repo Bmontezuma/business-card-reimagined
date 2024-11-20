@@ -20,6 +20,7 @@ scene.add(light);
 const planeGeometry = new THREE.PlaneGeometry(1, 0.5);
 const planeMaterial = new THREE.MeshBasicMaterial({ color: 0x333366, side: THREE.DoubleSide });
 const card = new THREE.Mesh(planeGeometry, planeMaterial);
+card.position.set(0, 0, -1.5); // Position the card slightly in front of the camera
 scene.add(card);
 
 // Tabs (Icons)
@@ -36,10 +37,11 @@ const tabGroup = new THREE.Group();
 tabData.forEach((tab, index) => {
   const texture = new THREE.TextureLoader().load(tab.icon);
   const material = new THREE.MeshBasicMaterial({ map: texture });
-  const geometry = new THREE.CircleGeometry(0.1, 32);
+  const geometry = new THREE.CircleGeometry(0.1, 32); // Circle for icons
   const icon = new THREE.Mesh(geometry, material);
 
-  icon.position.set(-0.5 + index * 0.2, -0.2, 0);
+  // Arrange icons horizontally below the card
+  icon.position.set(-0.5 + index * 0.2, -0.35, -1.5);
   icon.userData = { url: tab.url }; // Store URL for click events
   tabGroup.add(icon);
 });
