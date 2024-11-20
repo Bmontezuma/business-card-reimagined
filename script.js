@@ -32,14 +32,14 @@ function initARCard() {
   card = new THREE.Mesh(cardGeometry, cardMaterial);
   scene.add(card);
 
-  // Add light
+  // Add particle effects
+  createParticles();
+
+  // Lights
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
   const pointLight = new THREE.PointLight(0x00d4ff, 1, 100);
   pointLight.position.set(5, 5, 5);
   scene.add(ambientLight, pointLight);
-
-  // Add particle effects
-  createParticles();
 
   animate();
 }
