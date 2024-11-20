@@ -1,39 +1,61 @@
-/* General Styling */
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #121212;
-  color: #fff;
-}
+// Debugging AR Business Card Script
+document.addEventListener('DOMContentLoaded', () => {
+  const startArButton = document.getElementById("start-ar-button");
+  const landingPage = document.getElementById("landing-page");
+  const arContainer = document.getElementById("ar-container");
 
-#landing-page {
-  text-align: center;
-}
+  if (!startArButton || !landingPage || !arContainer) {
+    console.error('Critical elements not found. Check your HTML.');
+    return;
+  }
 
-#start-ar-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 18px;
-  background: #0077b5;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
+  const initAR = () => {
+    console.log('Initializing AR...');
 
-#start-ar-button:hover {
-  background: #005f93;
-}
+    // Check for WebXR support
+    if (!('xr' in navigator)) {
+      alert('WebXR is not supported in this browser.');
+      return;
+    }
 
-/* AR Scene */
-#ar-container {
-  width: 100%;
-  height: 100vh;
-  background-color: #000; /* Fallback for non-AR devices */
-}
+    // Hide landing page, show AR container
+    landingPage.style.display = "none";
+    arContainer.style.display = "block";
 
+    // Set up Scene, Camera, Renderer
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.xr.enabled = true;
+    arContainer.appendChild(renderer.domElement);
+
+    // Lighting
+    const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
+    scene.add(light);
+
+    // Business Card (Basic Placeholder)
+    const planeGeometry = new THREE.PlaneGeometry(1, 0.5);
+    const planeMaterial = new THREE.MeshBasicMaterial({ color: 0x333366, side: THREE.DoubleSide });
+    const card = new THREE.Mesh(planeGeometry, planeMaterial);
+    card.position.set(0, 0, -1.5);
+    scene.add(card);
+
+    // Animate
+    renderer.setAnimationLoop(() => {
+      renderer.render(scene, camera);
+    });
+
+    console.log('AR Initialized Successfully');
+  };
+
+  // Add Event Listener for the Start Button
+  startArButton.addEventListener('click', (event) => {
+    console.log('Start AR Button Clicked');
+    initAR();
+  });
+
+  // Additional Debugging
+  console.log('AR Script Loaded Successfully');
+});
