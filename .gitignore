@@ -51,4 +51,5 @@ AR/
 # Logs and crash reports
 *.log
 !Assets/assets/
+!assets/models/
 
