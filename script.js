@@ -1,53 +1,67 @@
 document.addEventListener('DOMContentLoaded', () => {
     const startARButton = document.getElementById('start-ar');
     const arOverlay = document.getElementById('ar-overlay');
-    const arScene = document.getElementById('ar-scene');
 
-    // WebXR Setup
+    // Check if WebXR is supported
     if ('xr' in navigator) {
         startARButton.addEventListener('click', async () => {
             try {
-                const xrSession = await navigator.xr.requestSession('immersive-ar');
-                xrSession.addEventListener('end', () => {
-                    arOverlay.classList.add('hidden');
+                // Request an AR session
+                const session = await navigator.xr.requestSession('immersive-ar', {
+                    requiredFeatures: ['hit-test']
                 });
 
+                // Hide start button, prepare AR scene
+                startARButton.style.display = 'none';
+                arOverlay.classList.remove('hidden');
+
+                // Create WebXR layer
                 const canvas = document.createElement('canvas');
-                arScene.appendChild(canvas);
+                const context = canvas.getContext('webgl');
+                const glLayer = new XRWebGLLayer(session, context);
 
-                const gl = canvas.getContext('webgl', { xrCompatible: true });
-                const renderer = new THREE.WebGLRenderer({
-                    canvas: canvas,
-                    context: gl
+                // Reference space for hit testing
+                const referenceSpace = await session.requestReferenceSpace('local');
+
+                // Hit test source to place the AR card
+                const hitTestSource = await session.requestHitTestSource({
+                    space: referenceSpace,
+                    entityTypes: ['plane', 'point']
                 });
 
-                // 3D Business Card Scene
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                // AR rendering loop
+                function onXRFrame(time, frame) {
+                    const pose = frame.getViewerPose(referenceSpace);
+                    
+                    if (pose) {
+                        // Perform hit test
+                        const hitTestResults = frame.getHitTestResults(hitTestSource);
+                        
+                        if (hitTestResults.length > 0) {
+                            // Get first hit test result
+                            const hitPose = hitTestResults[0].getPose(referenceSpace);
+                            
+                            // Here you could place your 3D business card at the hit point
+                            // For now, we'll just log the hit location
+                            console.log('AR Card Placement Point:', hitPose.transform.position);
+                        }
+                    }
 
-                // Create a floating 3D business card
-                const cardGeometry = new THREE.PlaneGeometry(1, 0.6);
-                const cardTexture = new THREE.TextureLoader().load('business-card-texture.png');
-                const cardMaterial = new THREE.MeshBasicMaterial({ map: cardTexture });
-                const cardMesh = new THREE.Mesh(cardGeometry, cardMaterial);
-                scene.add(cardMesh);
-
-                // Animate card
-                function animate() {
-                    cardMesh.rotation.y += 0.01;
-                    renderer.render(scene, camera);
-                    xrSession.requestAnimationFrame(animate);
+                    // Continue the AR session
+                    session.requestAnimationFrame(onXRFrame);
                 }
 
-                xrSession.requestAnimationFrame(animate);
-                arOverlay.classList.remove('hidden');
+                // Start the AR frame loop
+                session.requestAnimationFrame(onXRFrame);
+
             } catch (error) {
-                console.error('WebXR not supported', error);
-                alert('WebXR is not supported on this device.');
+                console.error('AR Session Error:', error);
+                alert('Unable to start AR experience. Make sure you have a compatible device and browser.');
             }
         });
     } else {
-        startARButton.textContent = 'WebXR Not Supported';
+        // No WebXR support
+        startARButton.textContent = 'AR Not Supported';
         startARButton.style.backgroundColor = 'red';
     }
 });
