@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brandon Montezuma AR Business Card</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/webxr/ARButton.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR Business Card</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="script.js" defer></script>
 </head>
 <body>
-    <div id="container">
-        <h1>Brandon Montezuma</h1>
-        <p>Welcome to my AR Business Card</p>
-        <button id="start-ar" class="ar-button">Start AR Session</button>
-    </div>
-
-    <script src="script.js"></script>
+  <button id="startAR">Start AR</button>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.153.0/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@webxr/three.js/build/ARButton.js"></script>
 </body>
 </html>
 

@@ -1,32 +1,51 @@
-// Initialize Three.js Scene
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.xr.enabled = true;
+import * as THREE from 'three';
+import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
 
-// Append renderer to body when AR session starts
-document.getElementById('start-ar').addEventListener('click', () => {
-    document.body.appendChild(renderer.domElement);
-    document.getElementById('container').style.display = 'none';
-    document.body.appendChild(ARButton.createButton(renderer));
-    startAR();
+let camera, scene, renderer;
+
+document.getElementById('startAR').addEventListener('click', () => {
+  init();
+  animate();
 });
 
-// AR Content
-function startAR() {
-    // Add a floating card
-    const cardGeometry = new THREE.PlaneGeometry(0.4, 0.2);
-    const cardMaterial = new THREE.MeshBasicMaterial({ color: 0x5555ff });
-    const card = new THREE.Mesh(cardGeometry, cardMaterial);
-    scene.add(card);
+function init() {
+  // Create the scene
+  scene = new THREE.Scene();
 
-    // Position the card in front of the camera
-    card.position.set(0, 0, -1);
+  // Create a camera
+  camera = new THREE.PerspectiveCamera(
+    70,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    100
+  );
 
-    // Render Loop
-    renderer.setAnimationLoop(() => {
-        renderer.render(scene, camera);
-    });
+  // Create the renderer
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.xr.enabled = true;
+  document.body.appendChild(renderer.domElement);
+
+  // Add ARButton for AR mode
+  document.body.appendChild(ARButton.createButton(renderer));
+
+  // Add lighting
+  const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
+  scene.add(light);
+
+  // Create the "business card" as a plane
+  const geometry = new THREE.PlaneGeometry(0.2, 0.1); // 20cm x 10cm
+  const material = new THREE.MeshBasicMaterial({ color: 0x007bff, side: THREE.DoubleSide });
+  const plane = new THREE.Mesh(geometry, material);
+
+  // Add the plane to the scene and position it in front of the camera
+  plane.position.set(0, 0, -0.5); // Half a meter away from the camera
+  scene.add(plane);
+}
+
+function animate() {
+  renderer.setAnimationLoop(() => {
+    renderer.render(scene, camera);
+  });
 }
 
