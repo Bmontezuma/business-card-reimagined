@@ -1,20 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <title>AR Business Card</title>
-  <link rel="stylesheet" href="styles.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Start AR Button -->
-  <button id="startAR">Start AR</button>
-  
-  <!-- Optional loading message -->
-  <div id="loading" style="display:none;">Loading AR experience...</div>
-  
-  <!-- No script tags here for Three.js -->
+  <header>
+    <h1>AR Business Card</h1>
+    <p>Explore your augmented reality business card in your browser!</p>
+  </header>
+  <button id="startButton">Start AR Experience</button>
+  <footer>
+    <p>© 2024 Your AR Business Card</p>
+  </footer>
+  <script type="module" src="script.js"></script>
 </body>
-<script type="module" src="script.js"></script>
 </html>
 
