@@ -1,46 +1,51 @@
 import * as THREE from 'three';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
 
+// Declare variables
 let camera, scene, renderer;
 
-document.getElementById('startAR').addEventListener('click', () => {
-  init();
-  animate();
+document.addEventListener('DOMContentLoaded', () => {
+  // Wait for the DOM to fully load
+  const startARButton = document.getElementById('startAR');
+  startARButton.addEventListener('click', () => {
+    startARButton.style.display = 'none'; // Hide button after clicking
+    init();
+    animate();
+  });
 });
 
 function init() {
-  // Create the scene
+  // Show loading message
+  document.getElementById('loading').style.display = 'block';
+
+  // Create a scene
   scene = new THREE.Scene();
 
   // Create a camera
-  camera = new THREE.PerspectiveCamera(
-    70,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    100
-  );
+  camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 100);
 
-  // Create the renderer
+  // Create a renderer
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.xr.enabled = true;
   document.body.appendChild(renderer.domElement);
 
-  // Add ARButton for AR mode
+  // Add AR Button for enabling AR mode
   document.body.appendChild(ARButton.createButton(renderer));
 
   // Add lighting
   const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
   scene.add(light);
 
-  // Create the "business card" as a plane
+  // Add a plane (business card)
   const geometry = new THREE.PlaneGeometry(0.2, 0.1); // 20cm x 10cm
   const material = new THREE.MeshBasicMaterial({ color: 0x007bff, side: THREE.DoubleSide });
   const plane = new THREE.Mesh(geometry, material);
-
-  // Add the plane to the scene and position it in front of the camera
-  plane.position.set(0, 0, -0.5); // Half a meter away from the camera
+  plane.position.set(0, 0, -0.5); // Place half a meter away
   scene.add(plane);
+
+  // Remove loading message
+  document.getElementById('loading').style.display = 'none';
 }
 
 function animate() {
