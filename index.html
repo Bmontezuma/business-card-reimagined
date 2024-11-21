@@ -1,26 +1,21 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <title>WebAR Experience</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
-
-  <!-- Custom Styles -->
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brandon Montezuma AR Business Card</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/webxr/ARButton.js"></script>
 </head>
 <body>
-  <header>
-    <h1>WebAR Experience</h1>
-    <p>Explore augmented reality in your browser!</p>
-  </header>
-  <button id="startButton">Start AR Experience</button>
-  <footer>
-    <p>© 2024 WebAR Demo</p>
-  </footer>
-  <script type="module" src="script.js"></script>
+    <div id="container">
+        <h1>Brandon Montezuma</h1>
+        <p>Welcome to my AR Business Card</p>
+        <button id="start-ar" class="ar-button">Start AR Session</button>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
 
