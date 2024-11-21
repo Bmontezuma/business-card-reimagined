@@ -1,7 +1,6 @@
-import * as THREE from 'three';
-import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
+import { ARButton } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/webxr/ARButton.js';
 
-// Declare variables
 let camera, scene, renderer;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,9 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function init() {
-  // Show loading message
-  document.getElementById('loading').style.display = 'block';
-
   // Create a scene
   scene = new THREE.Scene();
 
@@ -43,9 +39,6 @@ function init() {
   const plane = new THREE.Mesh(geometry, material);
   plane.position.set(0, 0, -0.5); // Place half a meter away
   scene.add(plane);
-
-  // Remove loading message
-  document.getElementById('loading').style.display = 'none';
 }
 
 function animate() {
