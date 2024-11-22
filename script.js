@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
       opacity: { value: 0.4 },
       size: { value: 60, random: true, anim: { enable: true, speed: 34, size_min: 6 } },
       line_linked: { enable: true, distance: 150, color: "#000", opacity: 0.4, width: 1 },
-      move: { enable: true, speed: 6, random: true, out_mode: "bounce" },
+      move: { enable: true, speed: 4, random: true, out_mode: "bounce" },
     },
     interactivity: {
       detect_on: "canvas",
