@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brandon's AR Business Card</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brandon Montezuma - AR Business Card</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer type="module" src="script.js"></script>
 </head>
 <body>
-    <!-- Main Container -->
-    <div id="container">
-        <h1>Welcome to My AR Business Card</h1>
-        <p>Explore my interactive card in AR mode.</p>
-        <!-- AR Button -->
-        <button id="start-ar">View in AR</button>
-    </div>
-    <script src="script.js"></script>
+  <!-- Particles.js container -->
+  <div id="particles-js"></div>
+
+  <!-- Main content -->
+  <div class="container">
+    <h1>Brandon Montezuma</h1>
+    <p>AR/VR Developer | Atlas School, Tulsa, OK</p>
+    <button id="start-ar">Start AR</button>
+  </div>
+
+  <!-- Stats.js -->
+  <div class="count-particles">
+    <span class="js-count-particles">--</span> particles
+  </div>
+
+  <!-- Particles.js and Stats.js libraries -->
+  <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
 </body>
 </html>
 
