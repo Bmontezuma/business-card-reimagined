@@ -20,20 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
     retina_detect: true,
   });
 
-  // Initialize Stats.js
-  const stats = new Stats();
-  document.body.appendChild(stats.dom);
-
-  const updateStats = () => {
-    stats.begin();
-    stats.end();
-    requestAnimationFrame(updateStats);
-  };
-
-  updateStats();
-
-  // AR button logic
-  document.getElementById("start-ar").addEventListener("click", async () => {
+  // Start AR button logic
+  document.getElementById("start-ar").addEventListener("click", () => {
     document.getElementById("particles-js").style.display = "none"; // Hide particles
     document.querySelector(".container").style.display = "none"; // Hide main content
     startARSession();
@@ -41,17 +29,21 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function startARSession() {
+  // WebGL Renderer
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.xr.enabled = true; // Enable WebXR
   document.body.appendChild(renderer.domElement);
 
+  // Scene and Camera
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
+  // Light
   const light = new THREE.AmbientLight(0xffffff, 0.6);
   scene.add(light);
 
+  // Load Business Card
   const loader = new GLTFLoader();
   loader.load("./assets/models/business-card.glb", (gltf) => {
     const card = gltf.scene;
@@ -60,10 +52,12 @@ async function startARSession() {
     scene.add(card);
   });
 
+  // Animation Loop
   renderer.setAnimationLoop(() => {
     renderer.render(scene, camera);
   });
 
+  // Start AR session
   const session = await navigator.xr.requestSession("immersive-ar", {
     requiredFeatures: ["local-floor"],
   });
