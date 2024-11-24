@@ -41,32 +41,17 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function startARSession() {
-  // WebGL Renderer
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.xr.enabled = true; // Enable WebXR
   document.body.appendChild(renderer.domElement);
 
-  // AR Button
-  const arButton = document.createElement("button");
-  arButton.textContent = "Enter AR";
-  arButton.style.cssText = "position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 999;";
-  document.body.appendChild(arButton);
-
-  arButton.addEventListener("click", () => {
-    renderer.xr.setSession(navigator.xr.requestSession("immersive-ar", { requiredFeatures: ["local-floor"] }));
-  });
-
-  // Scene and Camera
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 1.6, 3); // Typical AR starting height
 
-  // Light
   const light = new THREE.AmbientLight(0xffffff, 0.6);
   scene.add(light);
 
-  // 3D Object (Business Card)
   const loader = new GLTFLoader();
   loader.load("./assets/models/business-card.glb", (gltf) => {
     const card = gltf.scene;
@@ -75,13 +60,13 @@ async function startARSession() {
     scene.add(card);
   });
 
-  // Animation Loop
-  const animate = () => {
-    renderer.setAnimationLoop(() => {
-      renderer.render(scene, camera);
-    });
-  };
+  renderer.setAnimationLoop(() => {
+    renderer.render(scene, camera);
+  });
 
-  animate();
+  const session = await navigator.xr.requestSession("immersive-ar", {
+    requiredFeatures: ["local-floor"],
+  });
+  renderer.xr.setSession(session);
 }
 
