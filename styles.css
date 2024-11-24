@@ -19,38 +19,6 @@ canvas {
   background-position: 50% 50%;
 }
 
-/* Stats.js */
-.count-particles {
-  background: #000022;
-  position: absolute;
-  top: 48px;
-  left: 0;
-  width: 80px;
-  color: #13e8e9;
-  font-size: 0.8em;
-  text-align: left;
-  line-height: 14px;
-  padding-bottom: 2px;
-  font-family: Helvetica, Arial, sans-serif;
-  font-weight: bold;
-}
-.js-count-particles {
-  font-size: 1.1em;
-}
-#stats,
-.count-particles {
-  -webkit-user-select: none;
-  margin-top: 5px;
-  margin-left: 5px;
-}
-#stats {
-  border-radius: 3px 3px 0 0;
-  overflow: hidden;
-}
-.count-particles {
-  border-radius: 0 0 3px 3px;
-}
-
 /* Main content */
 .container {
   position: relative;
@@ -86,5 +54,19 @@ button {
 button:hover {
   background: #3597b0;
   transform: scale(1.1);
+}
+
+/* Info box for AR interactions */
+#info-box {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  display: none;
+  z-index: 10;
 }
 
