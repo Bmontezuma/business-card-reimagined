@@ -41,49 +41,47 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function startARSession() {
-  const canvas = document.createElement("canvas");
-  document.body.appendChild(canvas);
-  const gl = canvas.getContext("webgl", { xrCompatible: true });
+  // WebGL Renderer
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.xr.enabled = true; // Enable WebXR
+  document.body.appendChild(renderer.domElement);
 
-  const renderer = new THREE.WebGLRenderer({
-    alpha: true,
-    preserveDrawingBuffer: true,
-    canvas,
-    context: gl,
+  // AR Button
+  const arButton = document.createElement("button");
+  arButton.textContent = "Enter AR";
+  arButton.style.cssText = "position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 999;";
+  document.body.appendChild(arButton);
+
+  arButton.addEventListener("click", () => {
+    renderer.xr.setSession(navigator.xr.requestSession("immersive-ar", { requiredFeatures: ["local-floor"] }));
   });
-  renderer.autoClear = false;
 
+  // Scene and Camera
   const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 1.6, 3); // Typical AR starting height
 
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-  scene.add(ambientLight);
+  // Light
+  const light = new THREE.AmbientLight(0xffffff, 0.6);
+  scene.add(light);
 
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-  directionalLight.position.set(5, 10, 7.5);
-  scene.add(directionalLight);
-
-  const camera = new THREE.PerspectiveCamera();
-  camera.matrixAutoUpdate = false;
-
-  const session = await navigator.xr.requestSession("immersive-ar", {
-    requiredFeatures: ["hit-test"],
-  });
-  session.updateRenderState({
-    baseLayer: new XRWebGLLayer(session, gl),
-  });
-
-  const referenceSpace = await session.requestReferenceSpace("local");
-
+  // 3D Object (Business Card)
   const loader = new GLTFLoader();
   loader.load("./assets/models/business-card.glb", (gltf) => {
     const card = gltf.scene;
     card.scale.set(0.1, 0.1, 0.1);
-    card.position.set(0, 0, -0.5);
+    card.position.set(0, 0, -1); // Place in front of the user
     scene.add(card);
   });
 
-  session.requestAnimationFrame((time, frame) => {
-    renderer.render(scene, camera);
-  });
+  // Animation Loop
+  const animate = () => {
+    renderer.setAnimationLoop(() => {
+      renderer.render(scene, camera);
+    });
+  };
+
+  animate();
 }
 
