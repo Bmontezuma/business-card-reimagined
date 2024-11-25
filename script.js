@@ -50,12 +50,12 @@ async function startARSession() {
 
   // Add Hotspots
   const hotspots = [
-    { label: "ArtStation", link: "https://www.artstation.com", position: new THREE.Vector3(-0.5, 0, -1) },
-    { label: "GitHub", link: "https://github.com", position: new THREE.Vector3(0, 0, -1) },
-    { label: "Instagram", link: "https://www.instagram.com", position: new THREE.Vector3(0.5, 0, -1) },
-    { label: "Email", link: "mailto:example@example.com", position: new THREE.Vector3(-0.5, -0.5, -1) },
-    { label: "Wix", link: "https://www.wix.com", position: new THREE.Vector3(0, -0.5, -1) },
-    { label: "LinkedIn", link: "https://www.linkedin.com", position: new THREE.Vector3(0.5, -0.5, -1) },
+    { label: "ArtStation", link: "https://www.artstation.com/brandonmontezuma6", position: new THREE.Vector3(-0.5, 0, -1) },
+    { label: "GitHub", link: "https://github.com/Bmontezuma", position: new THREE.Vector3(0, 0, -1) },
+    { label: "Instagram", link: "https://www.instagram.com/montezumashare/", position: new THREE.Vector3(0.5, 0, -1) },
+    { label: "Email", link: "mailto:brandon.montezuma@yahoo.com", position: new THREE.Vector3(-0.5, -0.5, -1) },
+    { label: "Wix", link: "https://brandonmontezuma.wixsite.com/brandon-montezuma-3", position: new THREE.Vector3(0, -0.5, -1) },
+    { label: "LinkedIn", link: "https://www.linkedin.com/in/brandon-montezuma/", position: new THREE.Vector3(0.5, -0.5, -1) },
   ];
 
   hotspots.forEach((spot) => {
