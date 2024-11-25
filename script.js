@@ -28,6 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+let raycaster = new THREE.Raycaster();
+let pointer = new THREE.Vector2();
+let clickableObjects = []; // To store clickable hotspots
+
 async function startARSession() {
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -81,7 +85,7 @@ function createHotspot(label, position, link) {
   const geometry = new THREE.SphereGeometry(0.05, 32, 32);
   const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
   const sphere = new THREE.Mesh(geometry, material);
-  sphere.userData = { link };
+  sphere.userData = { link, label }; // Store link and label for interaction
 
   // Label
   const canvas = document.createElement("canvas");
@@ -103,7 +107,29 @@ function createHotspot(label, position, link) {
   group.add(sphere, labelSprite);
   group.position.copy(position);
 
-  sphere.addEventListener("selectstart", () => {
+  clickableObjects.push(sphere); // Add the sphere to the clickable objects array
+
+  return group;
+}
+
+// Detect pointer events
+window.addEventListener("pointerdown", onPointerDown);
+
+function onPointerDown(event) {
+  // Convert the pointer position to normalized device coordinates
+  pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+  pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  // Update the raycaster with the camera and pointer
+  raycaster.setFromCamera(pointer, camera);
+
+  // Check if any object is intersected
+  const intersects = raycaster.intersectObjects(clickableObjects);
+
+  if (intersects.length > 0) {
+    const object = intersects[0].object;
+    const { link, label } = object.userData;
+
     const infoBox = document.getElementById("info-box");
     infoBox.textContent = `Opening ${label}...`;
     infoBox.style.display = "block";
@@ -111,8 +137,6 @@ function createHotspot(label, position, link) {
       window.open(link, "_blank");
       infoBox.style.display = "none";
     }, 1000);
-  });
-
-  return group;
+  }
 }
 
