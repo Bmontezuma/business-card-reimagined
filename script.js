@@ -45,21 +45,21 @@ async function startARSession() {
 
   // Load Business Card Model
   const loader = new GLTFLoader();
-  loader.load("./assets/models/business-card.glb", (gltf) => {
+  loader.load("./assets/images/20241124_184828.jpg", (gltf) => {
     const card = gltf.scene;
     card.scale.set(0.1, 0.1, 0.1);
-    card.position.set(0, 0, -1); // Place in front of the user
+    card.position.set(0, 0, 1); // Place in front of the user
     scene.add(card);
   });
 
   // Add Hotspots
   const hotspots = [
-    { label: "ArtStation", link: "https://www.artstation.com/brandonmontezuma6", position: new THREE.Vector3(-0.5, 0, -1) },
-    { label: "GitHub", link: "https://github.com/Bmontezuma", position: new THREE.Vector3(0, 0, -1) },
-    { label: "Instagram", link: "https://www.instagram.com/montezumashare/", position: new THREE.Vector3(0.5, 0, -1) },
-    { label: "Email", link: "mailto:brandon.montezuma@yahoo.com", position: new THREE.Vector3(-0.5, -0.5, -1) },
-    { label: "Wix", link: "https://brandonmontezuma.wixsite.com/brandon-montezuma-3", position: new THREE.Vector3(0, -0.5, -1) },
-    { label: "LinkedIn", link: "https://www.linkedin.com/in/brandon-montezuma/", position: new THREE.Vector3(0.5, -0.5, -1) },
+    { label: "ArtStation", link: "https://www.artstation.com/brandonmontezuma6", position: new THREE.Vector3(-0.5, 0, 1) },
+    { label: "GitHub", link: "https://github.com/Bmontezuma", position: new THREE.Vector3(0, 0, 1) },
+    { label: "Instagram", link: "https://www.instagram.com/montezumashare/", position: new THREE.Vector3(0.5, 0, 1) },
+    { label: "Email", link: "mailto:brandon.montezuma@yahoo.com", position: new THREE.Vector3(-0.5, -0.5, 1) },
+    { label: "Wix", link: "https://brandonmontezuma.wixsite.com/brandon-montezuma-3", position: new THREE.Vector3(0, -0.5, 1) },
+    { label: "LinkedIn", link: "https://www.linkedin.com/in/brandon-montezuma/", position: new THREE.Vector3(0.5, -0.5, 1) },
   ];
 
   const imageMap = {
