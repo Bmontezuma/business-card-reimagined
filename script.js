@@ -62,8 +62,22 @@ async function startARSession() {
     { label: "LinkedIn", link: "https://www.linkedin.com/in/brandon-montezuma/", position: new THREE.Vector3(0.5, -0.5, -1) },
   ];
 
+  const imageMap = {
+    "ArtStation": "./assets/icons/4373281_artstation_logo_logos_icon.png",
+    "GitHub": "./assets/icons/317712_code repository_github_repository_resource_icon.png",
+    "Instagram": "./assets/icons/1298747_instagram_brand_logo_social media_icon.png",
+    "Email": "./assets/icons/2613310_chat_email_messenger_social media_web service_icon.png",
+    "Wix": "./assets/icons/8547120_wix_icon.png",
+    "LinkedIn": "./assets/icons/5296501_linkedin_network_linkedin logo_icon.png"
+  };
+
   hotspots.forEach((spot) => {
-    const hotspot = createHotspot(spot.label, spot.position, spot.link);
+    const hotspot = createHotspot(
+      spot.label,
+      spot.position,
+      spot.link,
+      imageMap[spot.label] // Use the specific filename for each label
+    );
     scene.add(hotspot);
   });
 
@@ -77,17 +91,19 @@ async function startARSession() {
   });
 }
 
-// Create a hotspot with a clickable label
-function createHotspot(label, position, link) {
+// Create a hotspot with a clickable image
+function createHotspot(label, position, link, imagePath) {
   const group = new THREE.Group();
 
-  // Sphere for hotspot
-  const geometry = new THREE.SphereGeometry(0.05, 32, 32);
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-  const sphere = new THREE.Mesh(geometry, material);
-  sphere.userData = { link, label }; // Store link and label for interaction
+  // Plane with the image for hotspot
+  const textureLoader = new THREE.TextureLoader();
+  const texture = textureLoader.load(imagePath); // Load the image
+  const geometry = new THREE.PlaneGeometry(0.2, 0.2); // Plane size for the image
+  const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
+  const plane = new THREE.Mesh(geometry, material);
+  plane.userData = { link, label }; // Store link and label for interaction
 
-  // Label
+  // Optional Label under the image
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
   canvas.width = 256;
@@ -98,16 +114,16 @@ function createHotspot(label, position, link) {
   context.font = "20px Arial";
   context.fillText(label, 10, 40);
 
-  const texture = new THREE.CanvasTexture(canvas);
-  const labelMaterial = new THREE.SpriteMaterial({ map: texture });
+  const labelTexture = new THREE.CanvasTexture(canvas);
+  const labelMaterial = new THREE.SpriteMaterial({ map: labelTexture });
   const labelSprite = new THREE.Sprite(labelMaterial);
   labelSprite.scale.set(0.5, 0.125, 1);
-  labelSprite.position.y = 0.1;
+  labelSprite.position.y = -0.15;
 
-  group.add(sphere, labelSprite);
+  group.add(plane, labelSprite);
   group.position.copy(position);
 
-  clickableObjects.push(sphere); // Add the sphere to the clickable objects array
+  clickableObjects.push(plane); // Add the plane to the clickable objects array
 
   return group;
 }
