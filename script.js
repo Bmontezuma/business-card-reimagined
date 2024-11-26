@@ -43,13 +43,14 @@ async function startARSession() {
   const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
   scene.add(light);
 
-  // Load Business Card Model
-  const loader = new GLTFLoader();
-  loader.load("./assets/images/20241124_184828.jpg", (jpg) => {
-    const card = jpg.scene;
-    card.scale.set(0.2, 0.2, 0.2);
-    card.position.set(0, 0, 2); // Place in front of the user
-    scene.add(card);
+  // Load Business Card Image
+const textureLoader = new THREE.TextureLoader();
+textureLoader.load("./assets/images/20241124_184828.jpg", (texture) => {
+  const geometry = new THREE.PlaneGeometry(1, 0.5); // Adjust size ratio as needed
+  const material = new THREE.MeshBasicMaterial({ map: texture });
+  const card = new THREE.Mesh(geometry, material);
+  card.position.set(0, 0, 2); // Place in front of the user
+  scene.add(card);
   });
 
   // Add Hotspots
