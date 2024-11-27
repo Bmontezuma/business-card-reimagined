@@ -50,11 +50,5 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s ease;
-}
-
-#start-ar:hover {
-  background: #021ffc;
-}
+  font-size:
 

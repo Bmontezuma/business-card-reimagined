@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Brandon Montezuma - AR Info Tabs</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://aframe.io/releases/1.2.0/aframe-ar.js"></script>
 </head>
 <body>
   <!-- Info box for displaying messages -->
   <div id="info-box"></div>
 
-  <!-- Particles.js background -->
+  <!-- Particles.js Background -->
   <div id="particles-js"></div>
 
   <!-- Main content -->
@@ -20,7 +22,30 @@
     <button id="start-ar">Start AR</button>
   </div>
 
-  <!-- External scripts -->
+  <!-- A-Frame AR Scene -->
+  <a-scene embedded arjs>
+    <!-- Define the AR environment and camera -->
+    <a-camera></a-camera>
+
+    <!-- Business Card Image -->
+    <a-image src="./assets/images/20241124_184828.jpg" width="1" height="0.5" position="0 0 -2"></a-image>
+
+    <!-- Hotspot Links (Clickable entities) -->
+    <a-entity id="artstation" position="-1 0 -2" geometry="primitive: plane; height: 0.2; width: 0.2" material="src: ./assets/icons/4373281_artstation_logo_logos_icon.png" 
+              event-set__mouseenter="scale: 1.1 1.1 1" event-set__mouseleave="scale: 1 1 1" onclick="window.open('https://www.artstation.com/brandonmontezuma6', '_blank')"></a-entity>
+    <a-entity id="github" position="0 0 -2" geometry="primitive: plane; height: 0.2; width: 0.2" material="src: ./assets/icons/317712_code_repository_github_repository_resource_icon.png"
+              event-set__mouseenter="scale: 1.1 1.1 1" event-set__mouseleave="scale: 1 1 1" onclick="window.open('https://github.com/Bmontezuma', '_blank')"></a-entity>
+    <a-entity id="instagram" position="1 0 -2" geometry="primitive: plane; height: 0.2; width: 0.2" material="src: ./assets/icons/1298747_instagram_brand_logo_social_media_icon.png"
+              event-set__mouseenter="scale: 1.1 1.1 1" event-set__mouseleave="scale: 1 1 1" onclick="window.open('https://www.instagram.com/montezumashare/', '_blank')"></a-entity>
+    <a-entity id="email" position="-1 -0.5 -2" geometry="primitive: plane; height: 0.2; width: 0.2" material="src: ./assets/icons/2613310_chat_email_messenger_social_media_web_service_icon.png"
+              event-set__mouseenter="scale: 1.1 1.1 1" event-set__mouseleave="scale: 1 1 1" onclick="window.location.href='mailto:brandon.montezuma@yahoo.com'"></a-entity>
+    <a-entity id="wix" position="0 -0.5 -2" geometry="primitive: plane; height: 0.2; width: 0.2" material="src: ./assets/icons/8547120_wix_icon.png"
+              event-set__mouseenter="scale: 1.1 1.1 1" event-set__mouseleave="scale: 1 1 1" onclick="window.open('https://brandonmontezuma.wixsite.com/brandon-montezuma-3', '_blank')"></a-entity>
+    <a-entity id="linkedin" position="1 -0.5 -2" geometry="primitive: plane; height: 0.2; width: 0.2" material="src: ./assets/icons/5296501_linkedin_network_linkedin_logo_icon.png"
+              event-set__mouseenter="scale: 1.1 1.1 1" event-set__mouseleave="scale: 1 1 1" onclick="window.open('https://www.linkedin.com/in/brandon-montezuma/', '_blank')"></a-entity>
+  </a-scene>
+
+  <!-- External Scripts -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script defer type="module" src="script.js"></script>
 </body>
