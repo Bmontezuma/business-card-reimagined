@@ -1,56 +1,56 @@
-/* General Body Styles */
+/* General body styles */
 body {
-  margin: 0;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-  background: #000;
-  color: white;
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: #000;
+    color: white;
 }
 
-/* Particles.js Background */
+/* Full-screen particle background */
 #particles-js {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Ensure particles stay behind other content */
 }
 
-/* Main Content Styles */
-.container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+/* Container to hold links and icons */
+#container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
 
-/* Info Box Styles */
-#info-box {
-  display: none;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(0, 0, 0, 0.8);
-  padding: 10px;
-  border-radius: 5px;
-  z-index: 100;
-  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-  font-size: 14px;
-}
-
-/* Start AR Button Styles */
+/* Style for the "Start AR" button */
 #start-ar {
-  padding: 10px 20px;
-  background: #043df5;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#start-ar:hover {
+    background-color: #45a049;
+}
+
+/* Icon container for social media links */
+#icon-container {
+    margin-top: 20px;
+}
+
+.icon {
+    width: 50px;
+    margin: 10px;
+    transition: transform 0.3s ease;
+}
+
+.icon:hover {
+    transform: scale(1.1);
 }
 

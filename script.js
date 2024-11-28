@@ -1,28 +1,26 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Handle "Start AR" button click
-  document.getElementById("start-ar").addEventListener("click", () => {
-    // Hide the normal content (particles, links, icons)
-    document.querySelector(".container").style.display = "none";
-
+// Function to start AR when button is clicked
+function startAR() {
     // Show the AR scene
-    document.getElementById("ar-scene").style.display = "block";
-  });
+    const arScene = document.querySelector('a-scene');
+    arScene.style.display = 'block'; // Show AR scene
+    document.getElementById('start-ar').style.display = 'none'; // Hide the Start AR button
+}
 
-  // Toggle Info Box Visibility on AR Button Hover
-  const infoBox = document.getElementById("info-box");
-  document.getElementById("start-ar").addEventListener("mouseenter", () => {
-    infoBox.style.display = "block";
-    infoBox.innerHTML = "Click to start the AR experience!";
-  });
-  document.getElementById("start-ar").addEventListener("mouseleave", () => {
-    infoBox.style.display = "none";
-  });
-
-  // Display info when AR scene is in use (based on events or scene readiness)
-  const arScene = document.querySelector("a-scene");
-  arScene.addEventListener("loaded", () => {
-    infoBox.style.display = "block";
-    infoBox.innerHTML = "Welcome to the AR world!";
-  });
+// Particle.js configuration for background particles
+particlesJS('particles-js', {
+    particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: '#ffffff' },
+        shape: { type: 'circle', stroke: { width: 0, color: '#000000' } },
+        opacity: { value: 0.5, random: true, anim: { enable: false, speed: 1, opacity_min: 0 } },
+        size: { value: 3, random: true, anim: { enable: false, speed: 40, size_min: 0.1 } },
+        line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } }
+    },
+    interactivity: {
+        events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
+        modes: { repulse: { distance: 100, duration: 1 }, push: { particles_nb: 4 } }
+    },
+    retina_detect: true
 });
 
