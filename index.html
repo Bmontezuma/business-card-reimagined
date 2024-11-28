@@ -1,61 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your AR Business Card</title>
-
-    <!-- A-Frame and AR.js Libraries -->
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-ar.js@2.2.0/dist/aframe-ar.js"></script>
-
-    <!-- Particle.js Script -->
-    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
-
-    <!-- Custom Styles for the page -->
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive AR Business Card</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script> <!-- Particles.js script -->
 </head>
 <body>
+  <div id="particles-js"></div>
 
-    <!-- AR Button and Content Section -->
-    <div id="container">
-        <button id="start-ar" onclick="startAR()">Start AR</button>
-        
-        <!-- Your Links and Icons -->
-        <div id="icon-container">
-            <a href="https://www.linkedin.com/in/brandon-montezuma/" target="_blank">
-                <img src="assets/icons/5296501_linkedin_network_linkedin_logo_icon.png" alt="LinkedIn" class="icon">
-            </a>
-            <a href="https://www.artstation.com/brandonmontezuma6" target="_blank">
-                <img src="assets/icons/4373281_artstation_logo_logos_icon.png" alt="ArtStation" class="icon">
-            </a>
-            <a href="https://brandonmontezuma.wixsite.com/brandon-montezuma-3" target="_blank">
-                <img src="assets/icons/8547120_wix_icon.png" alt="Wix" class="icon">
-            </a>
-            <a href="https://www.instagram.com/montezumashare/" target="_blank">
-                <img src="assets/icons/1298747_instagram_brand_logo_social_media_icon.png" alt="Instagram" class="icon">
-            </a>
-            <a href="https://github.com/Bmontezuma" target="_blank">
-                <img src="assets/icons/317712_code_repository_github_repository_resource_icon.png" alt="GitHub" class="icon">
-            </a>
-            <a href="mailto:Brandon.montezuma@yahoo.com" target="_blank">
-                <img src="assets/icons/2613310_chat_email_messenger_social_media_web_service_icon.png" alt="Email" class="icon">
-            </a>
-        </div>
-    </div>
+  <div class="container">
+    <h1>Welcome to My Interactive AR Business Card</h1>
+    <button id="start-ar">Start AR</button>
+    <p>Click to start the AR experience and explore my links in 3D!</p>
+  </div>
 
-    <!-- AR Scene for displaying content -->
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-        <a-marker preset="hiro">
-            <a-box position="0 0.5 0" color="blue"></a-box>
-        </a-marker>
-        <a-entity camera></a-entity>
-    </a-scene>
+  <!-- AR Page container (hidden by default) -->
+  <div class="ar-page">
+    <div id="hotspots-container"></div> <!-- Hotspot container to show clickable links -->
+  </div>
 
-    <!-- Particle.js Background -->
-    <div id="particles-js"></div>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script> <!-- Your script file -->
 </body>
 </html>
 
