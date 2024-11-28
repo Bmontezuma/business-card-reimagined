@@ -50,5 +50,7 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size:
+  font-size: 16px;
+  margin-top: 20px;
+}
 
