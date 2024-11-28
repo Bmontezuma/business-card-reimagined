@@ -1,59 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AR Links and Icons</title>
-  <script src="https://cdn.jsdelivr.net/npm/aframe@1.2.0/dist/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/aframe-ar.js@2.2.0/dist/aframe-ar.js"></script> <!-- AR.js for AR support -->
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your AR Business Card</title>
+    
+    <!-- A-Frame and AR.js Libraries -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-ar.js@2.2.0/dist/aframe-ar.js"></script>
+
+    <!-- Add your custom styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Links to your icons and info (we'll place this in the AR scene when it starts) -->
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: white;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Container for the button and links */
+        #container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+        }
+
+        /* Links and icons styles */
+        .links a, .icon {
+            display: inline-block;
+            margin: 5px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        /* Start AR Button */
+        #start-ar {
+            padding: 10px 20px;
+            background: #043df5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Add icons style */
+        .icon {
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
-  <!-- Main Content -->
-  <div class="container">
-    <h1>Welcome to My AR Experience</h1>
-    <button id="start-ar">Start AR</button>
-    <div id="info-box"></div>
+    <!-- AR Scene -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+        <a-marker preset="hiro">
+            <a-box position="0 0.5 0" color="blue"></a-box>
+        </a-marker>
+        <a-entity camera></a-entity>
+    </a-scene>
 
-    <!-- Links and Icons to be displayed in AR -->
-    <div id="icon-container">
-      <img src="assets/icons/1298747_instagram_brand_logo_social_media_icon.png" alt="Instagram" class="icon">
-      <img src="assets/icons/5296501_linkedin_network_linkedin_logo_icon.png" alt="LinkedIn" class="icon">
-      <img src="assets/icons/2613310_chat_email_messenger_social_media_web_service_icon.png" alt="Email" class="icon">
-      <img src="assets/icons/6433286_chat_communication_message_social_media_talk_icon.png" alt="Messenger" class="icon">
-      <img src="assets/icons/317712_code_repository_github_repository_resource_icon.png" alt="GitHub" class="icon">
-      <img src="assets/icons/8547120_wix_icon.png" alt="Wix" class="icon">
-      <img src="assets/icons/4373281_artstation_logo_logos_icon.png" alt="ArtStation" class="icon">
+    <!-- Main Content Section -->
+    <div id="container">
+        <button id="start-ar" onclick="startAR()">Start AR</button>
+        <!-- Your Links and Icons -->
+        <div id="icon-container">
+            <a href="https://www.linkedin.com/in/brandon-montezuma/" target="_blank">
+                <img src="assets/icons/5296501_linkedin_network_linkedin_logo_icon.png" alt="LinkedIn" class="icon">
+            </a>
+            <a href="https://www.artstation.com/brandonmontezuma6" target="_blank">
+                <img src="assets/icons/4373281_artstation_logo_logos_icon.png" alt="ArtStation" class="icon">
+            </a>
+            <a href="https://brandonmontezuma.wixsite.com/brandon-montezuma-3" target="_blank">
+                <img src="assets/icons/8547120_wix_icon.png" alt="Wix" class="icon">
+            </a>
+            <a href="https://www.instagram.com/montezumashare/" target="_blank">
+                <img src="assets/icons/1298747_instagram_brand_logo_social_media_icon.png" alt="Instagram" class="icon">
+            </a>
+            <a href="https://github.com/Bmontezuma" target="_blank">
+                <img src="assets/icons/317712_code_repository_github_repository_resource_icon.png" alt="GitHub" class="icon">
+            </a>
+            <a href="mailto:Brandon.montezuma@yahoo.com" target="_blank">
+                <img src="assets/icons/2613310_chat_email_messenger_social_media_web_service_icon.png" alt="Email" class="icon">
+            </a>
+        </div>
     </div>
 
-    <!-- Your Web Links -->
-    <div class="links">
-      <a href="https://www.linkedin.com/in/brandon-montezuma/" target="_blank">LinkedIn</a>
-      <a href="https://www.artstation.com/brandonmontezuma6" target="_blank">ArtStation</a>
-      <a href="https://brandonmontezuma.wixsite.com/brandon-montezuma-3" target="_blank">Wix</a>
-      <a href="https://www.instagram.com/montezumashare/" target="_blank">Instagram</a>
-      <a href="https://github.com/Bmontezuma" target="_blank">GitHub</a>
-      <a href="mailto:Brandon.montezuma@yahoo.com" target="_blank">Email</a>
-    </div>
-  </div>
+    <script>
+        function startAR() {
+            // Display AR mode
+            const arScene = document.querySelector('a-scene');
+            arScene.style.display = 'block'; // Show AR scene
+            document.getElementById('start-ar').style.display = 'none'; // Hide start button
+        }
+    </script>
 
-  <!-- AR Scene (hidden initially) -->
-  <a-scene id="ar-scene" embedded arjs style="display: none;">
-    <!-- Marker-based AR content -->
-    <a-marker preset="hiro">
-      <!-- Display Icons and Links as AR content -->
-      <a-image src="assets/icons/1298747_instagram_brand_logo_social_media_icon.png" position="0 0 0" width="1" height="1"></a-image>
-      <a-image src="assets/icons/5296501_linkedin_network_linkedin_logo_icon.png" position="2 0 0" width="1" height="1"></a-image>
-      <a-image src="assets/icons/2613310_chat_email_messenger_social_media_web_service_icon.png" position="-2 0 0" width="1" height="1"></a-image>
-      <a-image src="assets/icons/6433286_chat_communication_message_social_media_talk_icon.png" position="0 1 0" width="1" height="1"></a-image>
-      <a-image src="assets/icons/317712_code_repository_github_repository_resource_icon.png" position="2 1 0" width="1" height="1"></a-image>
-      <a-image src="assets/icons/8547120_wix_icon.png" position="-2 1 0" width="1" height="1"></a-image>
-      <a-image src="assets/icons/4373281_artstation_logo_logos_icon.png" position="0 2 0" width="1" height="1"></a-image>
-    </a-marker>
-    <a-entity camera></a-entity>
-  </a-scene>
-
-  <script src="script.js"></script>
-</body>
-</html>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#ffffff' },
+                shape: { type: 'circle', stroke: { width: 0, color: '#000000' } },
+                opacity: { value: 0.5, random: true, anim: { enable: false, speed: 1, opacity_min: 0 } },
+                size: { value: 3, random: true, anim: { enable: false, speed: 40, size_min: 0.1
 
