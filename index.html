@@ -1,40 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive AR Business Card</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/aframe-ar.js"></script>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR Links and Icons</title>
+  <script src="https://cdn.jsdelivr.net/npm/aframe@1.2.0/dist/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-ar.js@2.2.0/dist/aframe-ar.js"></script> <!-- AR.js for AR support -->
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <!-- Particles Background -->
-    <div id="particles-js"></div>
+  <!-- Main Content -->
+  <div class="container">
+    <h1>Welcome to My AR Experience</h1>
+    <button id="start-ar">Start AR</button>
+    <div id="info-box"></div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <!-- Keeping your icons, start AR button, and other elements intact -->
-        <button id="start-ar">Start AR</button>
-        <div id="info-box"></div>
+    <!-- Links and Icons to be displayed in AR -->
+    <div id="icon-container">
+      <img src="assets/icons/1298747_instagram_brand_logo_social_media_icon.png" alt="Instagram" class="icon">
+      <img src="assets/icons/5296501_linkedin_network_linkedin_logo_icon.png" alt="LinkedIn" class="icon">
+      <img src="assets/icons/2613310_chat_email_messenger_social_media_web_service_icon.png" alt="Email" class="icon">
+      <img src="assets/icons/6433286_chat_communication_message_social_media_talk_icon.png" alt="Messenger" class="icon">
+      <img src="assets/icons/317712_code_repository_github_repository_resource_icon.png" alt="GitHub" class="icon">
+      <img src="assets/icons/8547120_wix_icon.png" alt="Wix" class="icon">
+      <img src="assets/icons/4373281_artstation_logo_logos_icon.png" alt="ArtStation" class="icon">
     </div>
 
-    <!-- A-Frame AR Scene -->
-    <a-scene embedded arjs>
-        <!-- Define a marker to be used in the AR scene -->
-        <a-marker preset="hiro">
-            <!-- Add an image or 3D object here -->
-            <a-image src="./assets/images/20241124_184828.jpg" width="1" height="0.5"></a-image>
-        </a-marker>
+    <!-- Your Web Links -->
+    <div class="links">
+      <a href="https://www.linkedin.com/in/brandon-montezuma/" target="_blank">LinkedIn</a>
+      <a href="https://www.artstation.com/brandonmontezuma6" target="_blank">ArtStation</a>
+      <a href="https://brandonmontezuma.wixsite.com/brandon-montezuma-3" target="_blank">Wix</a>
+      <a href="https://www.instagram.com/montezumashare/" target="_blank">Instagram</a>
+      <a href="https://github.com/Bmontezuma" target="_blank">GitHub</a>
+      <a href="mailto:Brandon.montezuma@yahoo.com" target="_blank">Email</a>
+    </div>
+  </div>
 
-        <!-- Camera Setup -->
-        <a-entity camera></a-entity>
-    </a-scene>
+  <!-- AR Scene (hidden initially) -->
+  <a-scene id="ar-scene" embedded arjs style="display: none;">
+    <!-- Marker-based AR content -->
+    <a-marker preset="hiro">
+      <!-- Display Icons and Links as AR content -->
+      <a-image src="assets/icons/1298747_instagram_brand_logo_social_media_icon.png" position="0 0 0" width="1" height="1"></a-image>
+      <a-image src="assets/icons/5296501_linkedin_network_linkedin_logo_icon.png" position="2 0 0" width="1" height="1"></a-image>
+      <a-image src="assets/icons/2613310_chat_email_messenger_social_media_web_service_icon.png" position="-2 0 0" width="1" height="1"></a-image>
+      <a-image src="assets/icons/6433286_chat_communication_message_social_media_talk_icon.png" position="0 1 0" width="1" height="1"></a-image>
+      <a-image src="assets/icons/317712_code_repository_github_repository_resource_icon.png" position="2 1 0" width="1" height="1"></a-image>
+      <a-image src="assets/icons/8547120_wix_icon.png" position="-2 1 0" width="1" height="1"></a-image>
+      <a-image src="assets/icons/4373281_artstation_logo_logos_icon.png" position="0 2 0" width="1" height="1"></a-image>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
-
 </html>
 
