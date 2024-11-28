@@ -3,25 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive AR Business Card</title>
+  <title>Brandon Montezuma - AR Business Card</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script> <!-- Particles.js script -->
+  <script defer type="module" src="script.js"></script>
 </head>
 <body>
-  <div id="particles-js"></div> <!-- Particles background -->
+  <!-- Particles.js container -->
+  <div id="particles-js"></div>
 
+  <!-- Main content -->
   <div class="container">
-    <h1>Welcome to My Interactive AR Business Card</h1>
+    <h1>Brandon Montezuma</h1>
+    <p>AR/VR Developer | Atlas School, Tulsa, OK</p>
     <button id="start-ar">Start AR</button>
-    <p>Click to start the AR experience and explore my links in 3D!</p>
   </div>
 
-  <!-- AR Page container (hidden by default) -->
-  <div class="ar-page">
-    <div id="hotspots-container"></div> <!-- Hotspot container to show clickable links -->
+  <!-- Stats.js -->
+  <div class="count-particles">
+    <span class="js-count-particles">--</span> particles
   </div>
 
-  <script src="script.js"></script> <!-- Your script file -->
+  <!-- Use HTTPS for all script sources -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
 </body>
 </html>
-
