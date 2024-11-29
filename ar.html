@@ -8,14 +8,14 @@
   <script src="https://cdn.jsdelivr.net/npm/aframe-ar@1.7.2/aframe-ar.min.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-  <a-scene embedded arjs>
+  <a-scene embedded arjs="sourceType: webcam;">
     <!-- Business Card -->
     <a-plane position="0 0 -1" width="1.5" height="0.75" color="#007BFF">
       <a-text value="Brandon Montezuma" align="center" color="#fff" position="0 0 0.1"></a-text>
     </a-plane>
-    
-    <!-- AR.js Initialization -->
-    <a-marker-camera preset="hiro"></a-marker-camera>
+
+    <!-- Camera -->
+    <a-camera position="0 0 0"></a-camera>
   </a-scene>
 </body>
 </html>
