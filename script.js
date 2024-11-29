@@ -1,65 +1,119 @@
-// Register the shader for slow LED-like color transitions
-AFRAME.registerShader('ledColor', {
-  schema: {
-    time: { type: 'time', is: 'uniform' },
-  },
-  vertexShader: `
-    varying vec2 vUv;
-    void main() {
-      vUv = uv;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-  `,
-  fragmentShader: `
-    precision mediump float;
-    uniform float time;
-    varying vec2 vUv;
+const container = document.getElementById('particle-container');
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+container.appendChild(canvas);
 
-    void main() {
-      float slowTime = time * 0.001; // Slower transition
-      float r = sin(slowTime) * 0.5 + 0.5;
-      float g = sin(slowTime + 2.094) * 0.5 + 0.5;
-      float b = sin(slowTime + 4.188) * 0.5 + 0.5;
-      gl_FragColor = vec4(r, g, b, 1.0);
+let bubbles = [];
+const colors = [
+  '#ff6f61', '#6fffb3', '#61a6ff', '#f4ff61', '#a661ff', '#ff61a6', 
+  '#ffa500', '#40e0d0', '#ff6347', '#7b68ee', '#00fa9a', '#ba55d3', 
+  '#f08080', '#4682b4', '#ffd700', '#2e8b57', '#d2691e', '#dc143c', 
+  '#4169e1', '#32cd32', '#8a2be2', '#ff4500', '#ff1493', '#1e90ff', 
+  '#00ced1', '#adff2f', '#ffb6c1', '#6495ed', '#deb887', '#ff00ff'
+];
+let colorShift = 0;
+
+// Responsive canvas
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// Bubble Object
+class Bubble {
+  constructor(x = Math.random() * canvas.width, y = Math.random() * canvas.height) {
+    this.x = x;
+    this.y = y;
+    this.radius = Math.random() * 10 + 5;
+    this.speedX = Math.random() * 2 - 1;
+    this.speedY = Math.random() * 2 - 1;
+    this.color = colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  update(mouseX, mouseY) {
+    this.x += this.speedX;
+    this.y += this.speedY;
+
+    // Bounce off edges
+    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+    // Push away from mouse
+    const dx = this.x - mouseX;
+    const dy = this.y - mouseY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    if (distance < 100) {
+      const angle = Math.atan2(dy, dx);
+      this.speedX += Math.cos(angle) * 0.5;
+      this.speedY += Math.sin(angle) * 0.5;
     }
-  `
+
+    // Slow color shift
+    colorShift += 0.00002; // Adjust speed here
+    const hue = Math.sin(colorShift) * 360;
+    this.color = `hsl(${hue}, 100%, 50%)`;
+  }
+
+  draw() {
+    ctx.globalAlpha = 0.7;
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.fill();
+  }
+}
+
+// Initialize bubbles
+function initBubbles(count = 100) {
+  for (let i = 0; i < count; i++) {
+    bubbles.push(new Bubble());
+  }
+}
+initBubbles();
+
+// Spawn more bubbles on click
+canvas.addEventListener('click', (e) => {
+  for (let i = 0; i < 10; i++) {
+    bubbles.push(new Bubble(e.clientX, e.clientY));
+  }
 });
 
-// Register the generate-bubbles component
-AFRAME.registerComponent('generate-bubbles', {
-  init: function () {
-    const container = this.el; // The entity with this component
-    const numBubbles = 50; // Total bubbles
-    const bubbleRadius = 0.1; // Bubble size
-    const area = 5; // Range for random positions
-
-    for (let i = 0; i < numBubbles; i++) {
-      const bubble = document.createElement('a-sphere');
-      bubble.setAttribute('radius', bubbleRadius);
-      bubble.setAttribute('material', 'shader: ledColor');
-      bubble.setAttribute('position', {
-        x: (Math.random() - 0.5) * area,
-        y: (Math.random() - 0.5) * area,
-        z: (Math.random() - 0.5) * area,
-      });
-
-      // Add animation for random movements
-      bubble.setAttribute('animation', {
-        property: 'position',
-        to: {
-          x: (Math.random() - 0.5) * area,
-          y: (Math.random() - 0.5) * area,
-          z: (Math.random() - 0.5) * area,
-        },
-        loop: true,
-        dur: 4000 + Math.random() * 2000,
-      });
-
-      container.appendChild(bubble);
-    }
-  },
+// Animate bubbles
+let mouseX = -500;
+let mouseY = -500;
+canvas.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
 });
 
-// Attach the component to the bubble-container
-document.querySelector('#bubble-container').setAttribute('generate-bubbles', '');
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  bubbles.forEach((bubble) => {
+    bubble.update(mouseX, mouseY);
+    bubble.draw();
+  });
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+// LED text color transition
+function updateTextColors() {
+  const hue = Math.sin(colorShift) * 360;
+  const color = `hsl(${hue}, 100%, 50%)`;
+
+  document.getElementById('led-name').style.color = color;
+  document.getElementById('led-school').style.color = color;
+  requestAnimationFrame(updateTextColors);
+}
+updateTextColors();
+
+// Start AR function
+function startAR() {
+  window.location.href = 'ar.html';
+}
 
