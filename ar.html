@@ -8,18 +8,14 @@
   <script src="https://cdn.jsdelivr.net/npm/aframe-ar@1.7.2/aframe-ar.min.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-  <a-scene
-    vr-mode-ui="enabled: false"
-    embedded
-    arjs="sourceType: webcam; debugUIEnabled: false;">
-    
+  <a-scene embedded arjs>
     <!-- Business Card -->
     <a-plane position="0 0 -1" width="1.5" height="0.75" color="#007BFF">
       <a-text value="Brandon Montezuma" align="center" color="#fff" position="0 0 0.1"></a-text>
     </a-plane>
 
-    <!-- AR.js Debugging -->
-    <a-entity camera></a-entity>
+    <!-- Camera -->
+    <a-camera position="0 0 0"></a-camera>
   </a-scene>
 </body>
 </html>
