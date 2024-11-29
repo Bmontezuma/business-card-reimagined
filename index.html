@@ -3,28 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brandon Montezuma - AR Business Card</title>
+  <title>Interactive Business Card</title>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <link rel="stylesheet" href="styles.css">
-  <script defer type="module" src="script.js"></script>
 </head>
 <body>
-  <!-- Particles.js container -->
-  <div id="particles-js"></div>
+  <a-scene>
+    <!-- Background Sky -->
+    <a-sky color="#000"></a-sky>
 
-  <!-- Main content -->
-  <div class="container">
-    <h1>Brandon Montezuma</h1>
-    <p>AR/VR Developer | Atlas School, Tulsa, OK</p>
-    <button id="start-ar">Start AR</button>
-  </div>
+    <!-- Bubble Container -->
+    <a-entity id="bubble-container"></a-entity>
 
-  <!-- Stats.js -->
-  <div class="count-particles">
-    <span class="js-count-particles">--</span> particles
-  </div>
+    <!-- AR Launch Button -->
+    <a-plane 
+      position="0 1 -2" 
+      width="1.5" 
+      height="0.5" 
+      color="#007BFF" 
+      text="value: Launch AR Mode; color: #fff; align: center" 
+      class="clickable"
+      onclick="window.location.href='ar.html'">
+    </a-plane>
+  </a-scene>
 
-  <!-- Use HTTPS for all script sources -->
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  <script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
+  <script src="scripts.js"></script>
 </body>
 </html>
+

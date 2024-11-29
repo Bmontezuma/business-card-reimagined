@@ -1,79 +1,62 @@
-import * as THREE from "https://unpkg.com/three@0.126.0/build/three.module.js";
-import { GLTFLoader } from "https://unpkg.com/three@0.126.0/examples/jsm/loaders/GLTFLoader.js";
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Initialize particles.js
-  particlesJS("particles-js", {
-    particles: {
-      number: { value: 189, density: { enable: true, value_area: 631 } },
-      color: { value: "#043df5" },
-      shape: { type: "circle", stroke: { width: 2, color: "#021ffc" } },
-      opacity: { value: 0.4 },
-      size: { value: 60, random: true, anim: { enable: true, speed: 34, size_min: 6 } },
-      line_linked: { enable: true, distance: 150, color: "#000", opacity: 0.4, width: 1 },
-      move: { enable: true, speed: 4, random: true, out_mode: "bounce" },
-    },
-    interactivity: {
-      detect_on: "canvas",
-      events: {
-        onhover: { enable: true, mode: "repulse" },
-        onclick: { enable: true, mode: "push" },
-      },
-    },
-    retina_detect: true,
-  });
-
-  // Stats.js setup
-  const stats = new Stats();
-  stats.showPanel(0);
-  document.body.appendChild(stats.dom);
-
-  // Particle counter
-  const countParticles = document.querySelector(".js-count-particles");
-  const updateStats = () => {
-    stats.begin();
-    stats.end();
-    if (window.pJSDom[0]?.pJS.particles?.array) {
-      countParticles.innerText = window.pJSDom[0].pJS.particles.array.length;
+AFRAME.registerShader('ledColor', {
+  schema: {
+    time: { type: 'time', is: 'uniform' },
+  },
+  vertexShader: `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
-    requestAnimationFrame(updateStats);
-  };
-  updateStats();
+  `,
+  fragmentShader: `
+    precision mediump float;
+    uniform float time;
+    varying vec2 vUv;
 
-  // Start AR session
-  document.getElementById("start-ar").addEventListener("click", startARSession);
+    void main() {
+      float slowTime = time * 0.002; // Slower transition
+      float r = sin(slowTime) * 0.5 + 0.5;
+      float g = sin(slowTime + 2.094) * 0.5 + 0.5;
+      float b = sin(slowTime + 4.188) * 0.5 + 0.5;
+      gl_FragColor = vec4(r, g, b, 1.0);
+    }
+  `
 });
 
-function startARSession() {
-  document.body.innerHTML = ""; // Clear the page
-  initializeThreeJS(); // Initialize AR scene
-}
+AFRAME.registerComponent('generate-bubbles', {
+  init: function () {
+    const container = this.el;
+    const numBubbles = 50;
+    const bubbleRadius = 0.1;
+    const planeSize = 5;
 
-function initializeThreeJS() {
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
+    for (let i = 0; i < numBubbles; i++) {
+      const bubble = document.createElement('a-sphere');
+      bubble.setAttribute('class', 'bubble');
+      bubble.setAttribute('radius', bubbleRadius);
+      bubble.setAttribute('material', 'shader: ledColor');
+      container.appendChild(bubble);
 
-  // Add light
-  const light = new THREE.AmbientLight(0xffffff, 1);
-  scene.add(light);
+      bubble.setAttribute('position', {
+        x: (Math.random() - 0.5) * planeSize,
+        y: (Math.random() - 0.5) * planeSize,
+        z: 0
+      });
 
-  // Placeholder 3D object
-  const geometry = new THREE.BoxGeometry();
-  const material = new THREE.MeshStandardMaterial({ color: 0x4cc3d9 });
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
+      const speedX = (Math.random() - 0.5) * 0.02;
+      const speedY = (Math.random() - 0.5) * 0.02;
 
-  camera.position.z = 5;
-
-  // Animation loop
-  function animate() {
-    requestAnimationFrame(animate);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-    renderer.render(scene, camera);
+      bubble.setAttribute('animation__move', {
+        property: 'position',
+        dir: 'alternate',
+        dur: 2000 + Math.random() * 2000,
+        loop: true,
+        to: `${bubble.object3D.position.x + speedX} ${bubble.object3D.position.y + speedY} 0`
+      });
+    }
   }
-  animate();
-}
+});
+
+document.querySelector('#bubble-container').setAttribute('generate-bubbles', '');
+
