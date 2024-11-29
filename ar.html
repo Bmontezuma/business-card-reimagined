@@ -3,19 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AR Environment</title>
+  <title>AR Mode</title>
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/aframe-ar@1.0.0/aframe-ar.min.js"></script>
 </head>
 <body>
   <a-scene embedded arjs>
     <!-- Business Card -->
-    <a-box position="0 1 -2" depth="0.1" height="1" width="1.5" color="#FF5722" text="value: Your Business Card; color: #fff; align: center"></a-box>
-
-    <!-- Social Media Links -->
-    <a-sphere position="-1 1.2 -2.5" radius="0.3" color="#3b5998" text="value: Facebook; color: #fff;" onclick="window.open('https://facebook.com', '_blank')"></a-sphere>
-    <a-sphere position="1 1.2 -2.5" radius="0.3" color="#00aced" text="value: Twitter; color: #fff;" onclick="window.open('https://twitter.com', '_blank')"></a-sphere>
-    <a-sphere position="0 1.5 -3" radius="0.3" color="#2867B2" text="value: LinkedIn; color: #fff;" onclick="window.open('https://linkedin.com', '_blank')"></a-sphere>
+    <a-plane position="0 1 -2" width="2" height="1" color="#FF5722">
+      <a-text value="Brandon Montezuma" align="center" color="#fff" position="0 0 0.1"></a-text>
+    </a-plane>
   </a-scene>
 </body>
 </html>

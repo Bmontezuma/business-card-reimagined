@@ -12,4 +12,18 @@ body {
 .clickable:hover {
   transform: scale(1.1);
 }
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: black;
+}
+
+.clickable {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.clickable:hover {
+  transform: scale(1.1);
+}
 
