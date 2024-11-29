@@ -10,8 +10,13 @@
 <body>
   <a-scene embedded arjs>
     <!-- Business Card -->
-    <a-box position="0 1 -2" width="1.5" height="1" color="#FF5722" text="value: Your Business Card; color: #fff; align: center"></a-box>
+    <a-box position="0 1 -2" depth="0.1" height="1" width="1.5" color="#FF5722" text="value: Your Business Card; color: #fff; align: center"></a-box>
 
     <!-- Social Media Links -->
-    <a-sphere position="-1 1.2 -2.5" radius="0.3" color="#3b5998" text="value: Faceboo
+    <a-sphere position="-1 1.2 -2.5" radius="0.3" color="#3b5998" text="value: Facebook; color: #fff;" onclick="window.open('https://facebook.com', '_blank')"></a-sphere>
+    <a-sphere position="1 1.2 -2.5" radius="0.3" color="#00aced" text="value: Twitter; color: #fff;" onclick="window.open('https://twitter.com', '_blank')"></a-sphere>
+    <a-sphere position="0 1.5 -3" radius="0.3" color="#2867B2" text="value: LinkedIn; color: #fff;" onclick="window.open('https://linkedin.com', '_blank')"></a-sphere>
+  </a-scene>
+</body>
+</html>
 

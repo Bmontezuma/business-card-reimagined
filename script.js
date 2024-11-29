@@ -1,3 +1,4 @@
+// Register the shader for slow LED-like color transitions
 AFRAME.registerShader('ledColor', {
   schema: {
     time: { type: 'time', is: 'uniform' },
@@ -15,7 +16,7 @@ AFRAME.registerShader('ledColor', {
     varying vec2 vUv;
 
     void main() {
-      float slowTime = time * 0.002; // Slower transition
+      float slowTime = time * 0.001; // Slower transition
       float r = sin(slowTime) * 0.5 + 0.5;
       float g = sin(slowTime + 2.094) * 0.5 + 0.5;
       float b = sin(slowTime + 4.188) * 0.5 + 0.5;
@@ -24,39 +25,41 @@ AFRAME.registerShader('ledColor', {
   `
 });
 
+// Register the generate-bubbles component
 AFRAME.registerComponent('generate-bubbles', {
   init: function () {
-    const container = this.el;
-    const numBubbles = 50;
-    const bubbleRadius = 0.1;
-    const planeSize = 5;
+    const container = this.el; // The entity with this component
+    const numBubbles = 50; // Total bubbles
+    const bubbleRadius = 0.1; // Bubble size
+    const area = 5; // Range for random positions
 
     for (let i = 0; i < numBubbles; i++) {
       const bubble = document.createElement('a-sphere');
-      bubble.setAttribute('class', 'bubble');
       bubble.setAttribute('radius', bubbleRadius);
       bubble.setAttribute('material', 'shader: ledColor');
-      container.appendChild(bubble);
-
       bubble.setAttribute('position', {
-        x: (Math.random() - 0.5) * planeSize,
-        y: (Math.random() - 0.5) * planeSize,
-        z: 0
+        x: (Math.random() - 0.5) * area,
+        y: (Math.random() - 0.5) * area,
+        z: (Math.random() - 0.5) * area,
       });
 
-      const speedX = (Math.random() - 0.5) * 0.02;
-      const speedY = (Math.random() - 0.5) * 0.02;
-
-      bubble.setAttribute('animation__move', {
+      // Add animation for random movements
+      bubble.setAttribute('animation', {
         property: 'position',
-        dir: 'alternate',
-        dur: 2000 + Math.random() * 2000,
+        to: {
+          x: (Math.random() - 0.5) * area,
+          y: (Math.random() - 0.5) * area,
+          z: (Math.random() - 0.5) * area,
+        },
         loop: true,
-        to: `${bubble.object3D.position.x + speedX} ${bubble.object3D.position.y + speedY} 0`
+        dur: 4000 + Math.random() * 2000,
       });
+
+      container.appendChild(bubble);
     }
-  }
+  },
 });
 
+// Attach the component to the bubble-container
 document.querySelector('#bubble-container').setAttribute('generate-bubbles', '');
 
