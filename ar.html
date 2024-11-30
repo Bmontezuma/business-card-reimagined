@@ -7,7 +7,11 @@
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-  <a-scene xrweb="required: ar" renderer="logarithmicDepthBuffer: true" vr-mode-ui="enabled: false">
+  <a-scene
+    xrweb="required: ar"
+    renderer="logarithmicDepthBuffer: true"
+    vr-mode-ui="enabled: false"
+    embedded>
     <!-- Business Card -->
     <a-plane position="0 0 -2" width="1.5" height="0.75" color="#007BFF">
       <a-text value="Brandon Montezuma" color="#FFFFFF" position="0 0.2 0.01"></a-text>
