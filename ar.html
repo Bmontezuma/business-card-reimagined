@@ -1,68 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Brandon's AR Showcase</title>
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-ar@2.2.0/dist/aframe-ar.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR Mode</title>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-ar@1.7.2/aframe-ar.min.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-    <a-scene 
-        ar-mode
-        embedded 
-        arjs="sourceType: webcam; 
-               trackingMethod: best; 
-               debugUIEnabled: true;">
-        
-        <!-- Geometric Shapes -->
-        <a-entity position="0 0 -3">
-            <a-sphere position="0 1.25 -1" radius="0.5" color="#EF2D5E"></a-sphere>
-            <a-box position="-1 0.5 -3" rotation="0 45 0" width="0.5" height="0.5" depth="0.5" color="#4CC3D9"></a-box>
-            <a-cylinder position="1 0.75 -3" radius="0.25" height="0.75" color="#FFC65D"></a-cylinder>
-        </a-entity>
-
-        <!-- Simple 3D Models -->
-        <a-assets>
-            <a-asset-item id="robot-model" src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/models/gltf/Robot.glb"></a-asset-item>
-            <a-asset-item id="duck-model" src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/models/gltf/Duck.glb"></a-asset-item>
-        </a-assets>
-
-        <a-entity 
-            gltf-model="#robot-model" 
-            position="-2 0 -4" 
-            scale="0.3 0.3 0.3" 
-            rotation="0 45 0">
-        </a-entity>
-
-        <a-entity 
-            gltf-model="#duck-model" 
-            position="2 0 -4" 
-            scale="0.3 0.3 0.3" 
-            rotation="0 -45 0">
-        </a-entity>
-
-        <a-camera-static 
-            look-controls="enabled: true" 
-            camera="fov: 80; zoom: 1" 
-            position="0 1.6 0">
-        </a-camera-static>
-    </a-scene>
-
-    <script>
-        // Explicit camera permission request
-        document.addEventListener('DOMContentLoaded', () => {
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: true })
-                    .then(stream => {
-                        console.log('Camera access granted');
-                    })
-                    .catch(err => {
-                        console.error('Camera access denied:', err);
-                        alert('Please allow camera access to use AR');
-                    });
-            }
-        });
-    </script>
+  <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: window.innerWidth; displayHeight: window.innerHeight;">
+    <!-- Business Card -->
+    <a-plane position="0 0 -1" width="1.5" height="0.75" color="#007BFF">
+      <a-text value="Brandon Montezuma" align="center" color="#fff" position="0 0 0.1"></a-text>
+    </a-plane>
+    <!-- Camera -->
+    <a-camera></a-camera>
+  </a-scene>
 </body>
 </html>
+
