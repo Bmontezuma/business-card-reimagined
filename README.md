@@ -1,6 +1,4 @@
 
-
-
 # ***Business Card Reimagined***
 ## ***Hosted on GitHub.io***
 
