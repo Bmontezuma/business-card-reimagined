@@ -8,16 +8,17 @@
 </head>
 <body style="margin: 0; overflow: hidden;">
   <a-scene
-    xrweb="required: ar"
+    embedded
+    arjs="sourceType: webcam; debugUIEnabled: false;"
+    xrweb="required: ar; optionalFeatures: local-floor; optionalFeatures: bounded-floor"
     renderer="logarithmicDepthBuffer: true"
-    vr-mode-ui="enabled: false"
-    embedded>
+    vr-mode-ui="enabled: false">
     <!-- Business Card -->
     <a-plane position="0 0 -2" width="1.5" height="0.75" color="#007BFF">
       <a-text value="Brandon Montezuma" color="#FFFFFF" position="0 0.2 0.01"></a-text>
     </a-plane>
     <!-- AR Camera -->
-    <a-camera></a-camera>
+    <a-camera position="0 0 0"></a-camera>
   </a-scene>
 </body>
 </html>
