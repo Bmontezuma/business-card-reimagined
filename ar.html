@@ -9,17 +9,17 @@
 <body style="margin: 0; overflow: hidden;">
   <a-scene
     embedded
+    vr-mode-ui="enabled: false"
     renderer="logarithmicDepthBuffer: true"
-    xrweb="required: ar"
-    vr-mode-ui="enabled: false">
+    webxr="optionalFeatures: hit-test">
     
     <!-- Business Card -->
-    <a-plane position="0 0 -1" width="1.5" height="0.75" color="#007BFF">
+    <a-plane position="0 0 -2" width="1.5" height="0.75" color="#007BFF">
       <a-text value="Brandon Montezuma" color="#FFFFFF" position="0 0.2 0.01"></a-text>
     </a-plane>
 
     <!-- AR Camera -->
-    <a-camera look-controls="enabled: false"></a-camera>
+    <a-camera position="0 0 0"></a-camera>
   </a-scene>
 </body>
 </html>
