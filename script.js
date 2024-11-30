@@ -1,3 +1,4 @@
+// Particle System
 const container = document.getElementById('particle-container');
 const canvas = document.createElement('canvas');
 const ctx = canvas.getContext('2d');
@@ -13,7 +14,7 @@ const colors = [
 ];
 let colorShift = 0;
 
-// Responsive canvas
+// Responsive Canvas
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -35,12 +36,9 @@ class Bubble {
   update(mouseX, mouseY) {
     this.x += this.speedX;
     this.y += this.speedY;
-
-    // Bounce off edges
     if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
     if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
 
-    // Push away from mouse
     const dx = this.x - mouseX;
     const dy = this.y - mouseY;
     const distance = Math.sqrt(dx * dx + dy * dy);
@@ -50,8 +48,7 @@ class Bubble {
       this.speedY += Math.sin(angle) * 0.5;
     }
 
-    // Slow color shift
-    colorShift += 0.00002; // Adjust speed here
+    colorShift += 0.00002;
     const hue = Math.sin(colorShift) * 360;
     this.color = `hsl(${hue}, 100%, 50%)`;
   }
@@ -66,7 +63,7 @@ class Bubble {
   }
 }
 
-// Initialize bubbles
+// Initialize Bubbles
 function initBubbles(count = 100) {
   for (let i = 0; i < count; i++) {
     bubbles.push(new Bubble());
@@ -74,14 +71,7 @@ function initBubbles(count = 100) {
 }
 initBubbles();
 
-// Spawn more bubbles on click
-canvas.addEventListener('click', (e) => {
-  for (let i = 0; i < 10; i++) {
-    bubbles.push(new Bubble(e.clientX, e.clientY));
-  }
-});
-
-// Animate bubbles
+// Animate Bubbles
 let mouseX = -500;
 let mouseY = -500;
 canvas.addEventListener('mousemove', (e) => {
@@ -91,28 +81,15 @@ canvas.addEventListener('mousemove', (e) => {
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
   bubbles.forEach((bubble) => {
     bubble.update(mouseX, mouseY);
     bubble.draw();
   });
-
   requestAnimationFrame(animate);
 }
 animate();
 
-// LED text color transition
-function updateTextColors() {
-  const hue = Math.sin(colorShift) * 360;
-  const color = `hsl(${hue}, 100%, 50%)`;
-
-  document.getElementById('led-name').style.color = color;
-  document.getElementById('led-school').style.color = color;
-  requestAnimationFrame(updateTextColors);
-}
-updateTextColors();
-
-// Start AR function
+// Start AR Function
 function startAR() {
   window.location.href = 'ar.html';
 }
