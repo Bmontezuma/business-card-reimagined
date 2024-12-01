@@ -15,10 +15,15 @@
     embedded
     arjs>
     
-    <!-- Business Card -->
-    <a-plane position="0 2 -20" width="3" height="0.75" color="#007BFF">
-      <a-text value="Brandon Montezuma" color="#FFFFFF" position="-1 0.1 0.05"></a-text>
-    </a-plane>
+    <!-- Business Card Model -->
+    <a-assets>
+      <a-asset-item id="businessCardModel" src="assets/models/Business%20CardSound.glb"></a-asset-item>
+    </a-assets>
+    <a-entity 
+      gltf-model="#businessCardModel" 
+      position="0 2 -20" 
+      scale="1 1 1">
+    </a-entity>
 
     <!-- AR Camera -->
     <a-camera></a-camera>
