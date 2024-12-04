@@ -1,3 +1,4 @@
+
 // Particle System
 const container = document.getElementById('particle-container');
 const canvas = document.createElement('canvas');
