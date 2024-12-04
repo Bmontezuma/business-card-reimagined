@@ -24,18 +24,12 @@
     </a-assets>
 
     <!-- Add Icons with Links -->
-    <a-image src="#instagramIcon" position="-1 1 -2" scale="0.5 0.5 0.5" 
-             href="https://www.instagram.com/montezumashare/" link="title: Instagram;"></a-image>
-    <a-image src="#emailIcon" position="0 1 -2" scale="0.5 0.5 0.5" 
-             href="mailto:brandon.montezuma@yahoo.com" link="title: Email;"></a-image>
-    <a-image src="#githubIcon" position="1 1 -2" scale="0.5 0.5 0.5" 
-             href="https://github.com/Bmontezuma" link="title: GitHub;"></a-image>
-    <a-image src="#artstationIcon" position="-1 0.5 -2" scale="0.5 0.5 0.5" 
-             href="https://www.artstation.com/brandonmontezuma6" link="title: ArtStation;"></a-image>
-    <a-image src="#linkedinIcon" position="0 0.5 -2" scale="0.5 0.5 0.5" 
-             href="https://www.linkedin.com/in/brandon-montezuma/" link="title: LinkedIn;"></a-image>
-    <a-image src="#wixIcon" position="1 0.5 -2" scale="0.5 0.5 0.5" 
-             href="https://brandonmontezuma.wixsite.com/brandon-montezuma-3" link="title: Wix;"></a-image>
+    <a-image id="instagram" src="#instagramIcon" position="-1 1 -2" scale="0.5 0.5 0.5"></a-image>
+    <a-image id="email" src="#emailIcon" position="0 1 -2" scale="0.5 0.5 0.5"></a-image>
+    <a-image id="github" src="#githubIcon" position="1 1 -2" scale="0.5 0.5 0.5"></a-image>
+    <a-image id="artstation" src="#artstationIcon" position="-1 0.5 -2" scale="0.5 0.5 0.5"></a-image>
+    <a-image id="linkedin" src="#linkedinIcon" position="0 0.5 -2" scale="0.5 0.5 0.5"></a-image>
+    <a-image id="wix" src="#wixIcon" position="1 0.5 -2" scale="0.5 0.5 0.5"></a-image>
 
     <!-- AR Camera -->
     <a-camera fov="60" near="0.01" far="1000"></a-camera>
@@ -43,11 +37,23 @@
 
   <script>
     // Add Event Listeners for Clicking Icons
-    document.querySelectorAll('a-image[href]').forEach(icon => {
-      icon.addEventListener('click', () => {
-        const url = icon.getAttribute('href');
-        window.open(url, '_blank'); // Open link in a new tab
-      });
+    document.querySelector('#instagram').addEventListener('click', () => {
+      window.open('https://www.instagram.com/montezumashare/', '_blank');
+    });
+    document.querySelector('#email').addEventListener('click', () => {
+      window.open('mailto:brandon.montezuma@yahoo.com', '_blank');
+    });
+    document.querySelector('#github').addEventListener('click', () => {
+      window.open('https://github.com/Bmontezuma', '_blank');
+    });
+    document.querySelector('#artstation').addEventListener('click', () => {
+      window.open('https://www.artstation.com/brandonmontezuma6', '_blank');
+    });
+    document.querySelector('#linkedin').addEventListener('click', () => {
+      window.open('https://www.linkedin.com/in/brandon-montezuma/', '_blank');
+    });
+    document.querySelector('#wix').addEventListener('click', () => {
+      window.open('https://brandonmontezuma.wixsite.com/brandon-montezuma-3', '_blank');
     });
   </script>
 </body>
