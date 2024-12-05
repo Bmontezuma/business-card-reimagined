@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-  <title>WebXR AR Icons with Links</title>
+  <title>WebXR AR Scene</title>
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/dev/aframe/build/aframe-ar.js"></script>
 </head>
@@ -28,19 +28,26 @@
     <a-entity 
       gltf-model="#businessCardModel" 
       position="0 1 -2.5" 
-      scale="1 1 1">
+      rotation="-90 180 0" 
+      scale="0.5 0.5 0.5">
     </a-entity>
 
     <!-- Add Icons with Links -->
-    <a-image id="instagram" src="#instagramIcon" position="-1.5 1.5 -3" scale="0.3 0.3 0.3"></a-image>
+    <a-image id="instagram" src="#instagramIcon" position="-1 1.5 -3" scale="0.3 0.3 0.3"></a-image>
     <a-image id="email" src="#emailIcon" position="0 1.5 -3" scale="0.3 0.3 0.3"></a-image>
-    <a-image id="github" src="#githubIcon" position="1.5 1.5 -3" scale="0.3 0.3 0.3"></a-image>
-    <a-image id="artstation" src="#artstationIcon" position="-1.5 0.5 -3" scale="0.3 0.3 0.3"></a-image>
+    <a-image id="github" src="#githubIcon" position="1 1.5 -3" scale="0.3 0.3 0.3"></a-image>
+    <a-image id="artstation" src="#artstationIcon" position="-1 0.5 -3" scale="0.3 0.3 0.3"></a-image>
     <a-image id="linkedin" src="#linkedinIcon" position="0 0.5 -3" scale="0.3 0.3 0.3"></a-image>
-    <a-image id="wix" src="#wixIcon" position="1.5 0.5 -3" scale="0.3 0.3 0.3"></a-image>
+    <a-image id="wix" src="#wixIcon" position="1 0.5 -3" scale="0.3 0.3 0.3"></a-image>
 
     <!-- AR Camera -->
-    <a-camera fov="60" near="0.01" far="1000"></a-camera>
+    <a-camera 
+      position="0 0 0" 
+      look-controls 
+      fov="60" 
+      near="0.01" 
+      far="1000">
+    </a-camera>
   </a-scene>
 
   <script>
