@@ -13,7 +13,7 @@
     embedded
     arjs="sourceType: webcam; debugUIEnabled: false;">
     
-    <!-- Load Icon Textures -->
+    <!-- Load Assets -->
     <a-assets>
       <img id="instagramIcon" src="assets/icons/1298747_instagram_brand_logo_social_media_icon.png">
       <img id="emailIcon" src="assets/icons/2613310_chat_email_messenger_social media_web_service_icon.png">
@@ -21,40 +21,46 @@
       <img id="artstationIcon" src="assets/icons/4373281_artstation_logo_logos_icon.png">
       <img id="linkedinIcon" src="assets/icons/5296501_linkedin_network_linkedin_logo_icon.png">
       <img id="wixIcon" src="assets/icons/8547120_wix_icon.png">
+      <a-asset-item id="businessCardModel" src="assets/models/BusinessCardBrandonMontezuma.glb"></a-asset-item>
     </a-assets>
 
+    <!-- Add 3D Business Card -->
+    <a-entity 
+      gltf-model="#businessCardModel" 
+      position="0 1 -2.5" 
+      scale="1 1 1">
+    </a-entity>
+
     <!-- Add Icons with Links -->
-    <a-image id="instagram" src="#instagramIcon" position="-1 1 -2" scale="0.5 0.5 0.5"></a-image>
-    <a-image id="email" src="#emailIcon" position="0 1 -2" scale="0.5 0.5 0.5"></a-image>
-    <a-image id="github" src="#githubIcon" position="1 1 -2" scale="0.5 0.5 0.5"></a-image>
-    <a-image id="artstation" src="#artstationIcon" position="-1 0.5 -2" scale="0.5 0.5 0.5"></a-image>
-    <a-image id="linkedin" src="#linkedinIcon" position="0 0.5 -2" scale="0.5 0.5 0.5"></a-image>
-    <a-image id="wix" src="#wixIcon" position="1 0.5 -2" scale="0.5 0.5 0.5"></a-image>
+    <a-image id="instagram" src="#instagramIcon" position="-1.5 1.5 -3" scale="0.3 0.3 0.3"></a-image>
+    <a-image id="email" src="#emailIcon" position="0 1.5 -3" scale="0.3 0.3 0.3"></a-image>
+    <a-image id="github" src="#githubIcon" position="1.5 1.5 -3" scale="0.3 0.3 0.3"></a-image>
+    <a-image id="artstation" src="#artstationIcon" position="-1.5 0.5 -3" scale="0.3 0.3 0.3"></a-image>
+    <a-image id="linkedin" src="#linkedinIcon" position="0 0.5 -3" scale="0.3 0.3 0.3"></a-image>
+    <a-image id="wix" src="#wixIcon" position="1.5 0.5 -3" scale="0.3 0.3 0.3"></a-image>
 
     <!-- AR Camera -->
     <a-camera fov="60" near="0.01" far="1000"></a-camera>
   </a-scene>
 
   <script>
-    // Add Event Listeners for Clicking Icons
-    document.querySelector('#instagram').addEventListener('click', () => {
-      window.open('https://www.instagram.com/montezumashare/', '_blank');
-    });
-    document.querySelector('#email').addEventListener('click', () => {
-      window.open('mailto:brandon.montezuma@yahoo.com', '_blank');
-    });
-    document.querySelector('#github').addEventListener('click', () => {
-      window.open('https://github.com/Bmontezuma', '_blank');
-    });
-    document.querySelector('#artstation').addEventListener('click', () => {
-      window.open('https://www.artstation.com/brandonmontezuma6', '_blank');
-    });
-    document.querySelector('#linkedin').addEventListener('click', () => {
-      window.open('https://www.linkedin.com/in/brandon-montezuma/', '_blank');
-    });
-    document.querySelector('#wix').addEventListener('click', () => {
-      window.open('https://brandonmontezuma.wixsite.com/brandon-montezuma-3', '_blank');
-    });
+    // Add Event Listeners for Mobile Compatibility
+    function addIconClickListener(selector, url) {
+      const icon = document.querySelector(selector);
+      icon.addEventListener('mousedown', () => {
+        window.open(url, '_blank');
+      });
+      icon.addEventListener('touchstart', () => {
+        window.open(url, '_blank');
+      });
+    }
+
+    addIconClickListener('#instagram', 'https://www.instagram.com/montezumashare/');
+    addIconClickListener('#email', 'mailto:brandon.montezuma@yahoo.com');
+    addIconClickListener('#github', 'https://github.com/Bmontezuma');
+    addIconClickListener('#artstation', 'https://www.artstation.com/brandonmontezuma6');
+    addIconClickListener('#linkedin', 'https://www.linkedin.com/in/brandon-montezuma/');
+    addIconClickListener('#wix', 'https://brandonmontezuma.wixsite.com/brandon-montezuma-3');
   </script>
 </body>
 </html>
