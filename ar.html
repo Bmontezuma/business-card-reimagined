@@ -9,9 +9,11 @@
 </head>
 <body style="margin: 0; overflow: hidden;">
   <a-scene
+    cursor="rayOrigin: mouse"
+    raycaster="objects: .clickable"
     vr-mode-ui="enabled: false"
     embedded
-    arjs="sourceType: webcam; debugUIEnabled: false;">
+    arjs="sourceType: webcam; debugUIEnabled: false">
     
     <!-- Load Assets -->
     <a-assets>
@@ -27,18 +29,18 @@
     <!-- Add 3D Business Card -->
     <a-entity 
       gltf-model="#businessCardModel" 
-      position="0 1 -2.5" 
+      position="0 1 -4.5" 
       rotation="0 -90 0" 
       scale="0.5 0.5 0.5">
     </a-entity>
 
     <!-- Add Icons with Links -->
-    <a-image id="instagram" src="#instagramIcon" position="-1 1.5 -3" scale="0.3 0.3 0.3"></a-image>
-    <a-image id="email" src="#emailIcon" position="0 1.5 -3" scale="0.3 0.3 0.3"></a-image>
-    <a-image id="github" src="#githubIcon" position="1 1.5 -3" scale="0.3 0.3 0.3"></a-image>
-    <a-image id="artstation" src="#artstationIcon" position="-1 0.5 -3" scale="0.3 0.3 0.3"></a-image>
-    <a-image id="linkedin" src="#linkedinIcon" position="0 0.5 -3" scale="0.3 0.3 0.3"></a-image>
-    <a-image id="wix" src="#wixIcon" position="1 0.5 -3" scale="0.3 0.3 0.3"></a-image>
+    <a-image id="instagram" src="#instagramIcon" position="-1 1.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
+    <a-image id="email" src="#emailIcon" position="0 1.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
+    <a-image id="github" src="#githubIcon" position="1 1.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
+    <a-image id="artstation" src="#artstationIcon" position="-1 0.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
+    <a-image id="linkedin" src="#linkedinIcon" position="0 0.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
+    <a-image id="wix" src="#wixIcon" position="1 0.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
 
     <!-- AR Camera -->
     <a-camera 
@@ -51,23 +53,23 @@
   </a-scene>
 
   <script>
-    // Add Event Listeners for Mobile Compatibility
-    function addIconClickListener(selector, url) {
-      const icon = document.querySelector(selector);
-      icon.addEventListener('mousedown', () => {
-        window.open(url, '_blank');
-      });
-      icon.addEventListener('touchstart', () => {
-        window.open(url, '_blank');
-      });
-    }
+    document.addEventListener('DOMContentLoaded', () => {
+      function addIconClickListener(selector, url) {
+        const icon = document.querySelector(selector);
+        icon.setAttribute('class', 'clickable'); // Ensure it's marked as clickable
+        icon.addEventListener('click', () => {
+          console.log(`Opening URL: ${url}`); // Debugging log
+          window.open(url, '_blank');
+        });
+      }
 
-    addIconClickListener('#instagram', 'https://www.instagram.com/montezumashare/');
-    addIconClickListener('#email', 'mailto:brandon.montezuma@yahoo.com');
-    addIconClickListener('#github', 'https://github.com/Bmontezuma');
-    addIconClickListener('#artstation', 'https://www.artstation.com/brandonmontezuma6');
-    addIconClickListener('#linkedin', 'https://www.linkedin.com/in/brandon-montezuma/');
-    addIconClickListener('#wix', 'https://brandonmontezuma.wixsite.com/brandon-montezuma-3');
+      addIconClickListener('#instagram', 'https://www.instagram.com/montezumashare/');
+      addIconClickListener('#email', 'mailto:brandon.montezuma@yahoo.com');
+      addIconClickListener('#github', 'https://github.com/Bmontezuma');
+      addIconClickListener('#artstation', 'https://www.artstation.com/brandonmontezuma6');
+      addIconClickListener('#linkedin', 'https://www.linkedin.com/in/brandon-montezuma/');
+      addIconClickListener('#wix', 'https://brandonmontezuma.wixsite.com/brandon-montezuma-3');
+    });
   </script>
 </body>
 </html>
