@@ -34,13 +34,60 @@
       scale="0.5 0.5 0.5">
     </a-entity>
 
-    <!-- Add Icons with Links -->
-    <a-image id="instagram" src="#instagramIcon" position="-1 1.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
-    <a-image id="email" src="#emailIcon" position="0 1.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
-    <a-image id="github" src="#githubIcon" position="1 1.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
-    <a-image id="artstation" src="#artstationIcon" position="-1 0.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
-    <a-image id="linkedin" src="#linkedinIcon" position="0 0.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
-    <a-image id="wix" src="#wixIcon" position="1 0.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
+    <!-- Add Icons with Direct Links -->
+    <a-image 
+      src="#instagramIcon" 
+      position="-1 1.5 -3" 
+      scale="0.3 0.3 0.3" 
+      href="https://www.instagram.com/montezumashare/" 
+      target="_blank" 
+      class="clickable">
+    </a-image>
+
+    <a-image 
+      src="#emailIcon" 
+      position="0 1.5 -3" 
+      scale="0.3 0.3 0.3" 
+      href="mailto:brandon.montezuma@yahoo.com" 
+      target="_blank" 
+      class="clickable">
+    </a-image>
+
+    <a-image 
+      src="#githubIcon" 
+      position="1 1.5 -3" 
+      scale="0.3 0.3 0.3" 
+      href="https://github.com/Bmontezuma" 
+      target="_blank" 
+      class="clickable">
+    </a-image>
+
+    <a-image 
+      src="#artstationIcon" 
+      position="-1 0.5 -3" 
+      scale="0.3 0.3 0.3" 
+      href="https://www.artstation.com/brandonmontezuma6" 
+      target="_blank" 
+      class="clickable">
+    </a-image>
+
+    <a-image 
+      src="#linkedinIcon" 
+      position="0 0.5 -3" 
+      scale="0.3 0.3 0.3" 
+      href="https://www.linkedin.com/in/brandon-montezuma/" 
+      target="_blank" 
+      class="clickable">
+    </a-image>
+
+    <a-image 
+      src="#wixIcon" 
+      position="1 0.5 -3" 
+      scale="0.3 0.3 0.3" 
+      href="https://brandonmontezuma.wixsite.com/brandon-montezuma-3" 
+      target="_blank" 
+      class="clickable">
+    </a-image>
 
     <!-- AR Camera -->
     <a-camera 
@@ -51,26 +98,6 @@
       far="1000">
     </a-camera>
   </a-scene>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      function addIconClickListener(selector, url) {
-        const icon = document.querySelector(selector);
-        icon.setAttribute('class', 'clickable'); // Ensure it's marked as clickable
-        icon.addEventListener('click', () => {
-          console.log(`Opening URL: ${url}`); // Debugging log
-          window.open(url, '_blank');
-        });
-      }
-
-      addIconClickListener('#instagram', 'https://www.instagram.com/montezumashare/');
-      addIconClickListener('#email', 'mailto:brandon.montezuma@yahoo.com');
-      addIconClickListener('#github', 'https://github.com/Bmontezuma');
-      addIconClickListener('#artstation', 'https://www.artstation.com/brandonmontezuma6');
-      addIconClickListener('#linkedin', 'https://www.linkedin.com/in/brandon-montezuma/');
-      addIconClickListener('#wix', 'https://brandonmontezuma.wixsite.com/brandon-montezuma-3');
-    });
-  </script>
 </body>
 </html>
 
