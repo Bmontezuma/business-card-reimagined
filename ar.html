@@ -18,86 +18,86 @@
     <!-- Load Assets -->
     <a-assets>
       <img id="instagramIcon" src="assets/icons/1298747_instagram_brand_logo_social_media_icon.png">
-      <img id="emailIcon" src="assets/icons/2613310_chat_email_messenger_social media_web_service_icon.png">
+      <img id="emailIcon" src="assets/icons/2613310_chat_email_messenger_social_media_web_service_icon.png">
       <img id="githubIcon" src="assets/icons/317712_code_repository_github_repository_resource_icon.png">
       <img id="artstationIcon" src="assets/icons/4373281_artstation_logo_logos_icon.png">
       <img id="linkedinIcon" src="assets/icons/5296501_linkedin_network_linkedin_logo_icon.png">
       <img id="wixIcon" src="assets/icons/8547120_wix_icon.png">
-      <a-asset-item id="businessCardModel" src="assets/models/BusinessCardBrandonMontezuma.glb"></a-asset-item>
     </a-assets>
 
-    <!-- Add 3D Business Card -->
-    <a-entity 
-      gltf-model="#businessCardModel" 
-      position="0 1 -6.5" 
-      rotation="0 -90 0" 
-      scale="0.5 0.5 0.5">
-    </a-entity>
-
-    <!-- Add Icons with Direct Links -->
+    <!-- Add Icons -->
     <a-image 
       src="#instagramIcon" 
       position="-1 1.5 -3" 
       scale="0.3 0.3 0.3" 
-      href="https://www.instagram.com/montezumashare/" 
-      target="_blank" 
-      class="clickable">
+      class="clickable" 
+      id="instagram">
     </a-image>
 
     <a-image 
       src="#emailIcon" 
       position="0 1.5 -3" 
       scale="0.3 0.3 0.3" 
-      href="mailto:brandon.montezuma@yahoo.com" 
-      target="_blank" 
-      class="clickable">
+      class="clickable" 
+      id="email">
     </a-image>
 
     <a-image 
       src="#githubIcon" 
       position="1 1.5 -3" 
       scale="0.3 0.3 0.3" 
-      href="https://github.com/Bmontezuma" 
-      target="_blank" 
-      class="clickable">
+      class="clickable" 
+      id="github">
     </a-image>
 
     <a-image 
       src="#artstationIcon" 
       position="-1 0.5 -3" 
       scale="0.3 0.3 0.3" 
-      href="https://www.artstation.com/brandonmontezuma6" 
-      target="_blank" 
-      class="clickable">
+      class="clickable" 
+      id="artstation">
     </a-image>
 
     <a-image 
       src="#linkedinIcon" 
       position="0 0.5 -3" 
       scale="0.3 0.3 0.3" 
-      href="https://www.linkedin.com/in/brandon-montezuma/" 
-      target="_blank" 
-      class="clickable">
+      class="clickable" 
+      id="linkedin">
     </a-image>
 
     <a-image 
       src="#wixIcon" 
       position="1 0.5 -3" 
       scale="0.3 0.3 0.3" 
-      href="https://brandonmontezuma.wixsite.com/brandon-montezuma-3" 
-      target="_blank" 
-      class="clickable">
+      class="clickable" 
+      id="wix">
     </a-image>
-
-    <!-- AR Camera -->
-    <a-camera 
-      position="0 0 0" 
-      look-controls 
-      fov="60" 
-      near="0.01" 
-      far="1000">
-    </a-camera>
   </a-scene>
+
+  <script>
+    // Force link functionality for each element
+    const links = {
+      instagram: 'https://www.instagram.com/montezumashare/',
+      email: 'mailto:brandon.montezuma@yahoo.com',
+      github: 'https://github.com/Bmontezuma',
+      artstation: 'https://www.artstation.com/brandonmontezuma6',
+      linkedin: 'https://www.linkedin.com/in/brandon-montezuma/',
+      wix: 'https://brandonmontezuma.wixsite.com/brandon-montezuma-3'
+    };
+
+    // Attach event listeners
+    Object.keys(links).forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.addEventListener('click', () => {
+          window.open(links[id], '_blank');
+        });
+      } else {
+        console.error(`Element with id ${id} not found`);
+      }
+    });
+  </script>
 </body>
 </html>
 
