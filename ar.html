@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,13 +56,26 @@
     document.addEventListener('DOMContentLoaded', () => {
       function addIconClickListener(selector, url) {
         const icon = document.querySelector(selector);
-        icon.setAttribute('class', 'clickable'); // Ensure it's marked as clickable
-        icon.addEventListener('click', () => {
-          console.log(`Opening URL: ${url}`); // Debugging log
-          window.open(url, '_blank');
-        });
+        if (icon) {
+          // Debug: Add hover and click listeners
+          icon.addEventListener('mouseenter', () => {
+            console.log(`Hovered over: ${selector}`);
+          });
+
+          icon.addEventListener('click', () => {
+            console.log(`Opening URL: ${url}`);
+            window.open(url, '_blank');
+          });
+
+          // Debugging log: Successful listener attachment
+          console.log(`Event listener attached to ${selector}`);
+        } else {
+          // Debugging log: Icon not found
+          console.error(`Icon not found for selector: ${selector}`);
+        }
       }
 
+      // Add click listeners to all icons
       addIconClickListener('#instagram', 'https://www.instagram.com/montezumashare/');
       addIconClickListener('#email', 'mailto:brandon.montezuma@yahoo.com');
       addIconClickListener('#github', 'https://github.com/Bmontezuma');
