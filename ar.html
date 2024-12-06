@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+T <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -17,38 +17,80 @@
     
     <!-- Load Assets -->
     <a-assets>
-      <img id="instagramIcon" src="assets/icons/1298747_instagram_brand_logo_social_media_icon.png">
-      <img id="emailIcon" src="assets/icons/2613310_chat_email_messenger_social media_web_service_icon.png">
-      <img id="githubIcon" src="assets/icons/317712_code_repository_github_repository_resource_icon.png">
-      <img id="artstationIcon" src="assets/icons/4373281_artstation_logo_logos_icon.png">
-      <img id="linkedinIcon" src="assets/icons/5296501_linkedin_network_linkedin_logo_icon.png">
-      <img id="wixIcon" src="assets/icons/8547120_wix_icon.png">
+      <img id="instagramIcon" src="assets/icons/1298747_instagram_brand_logo_social_media_icon.png" alt="Instagram Icon">
+      <img id="emailIcon" src="assets/icons/2613310_chat_email_messenger_social media_web_service_icon.png" alt="Email Icon">
+      <img id="githubIcon" src="assets/icons/317712_code_repository_github_repository_resource_icon.png" alt="GitHub Icon">
+      <img id="artstationIcon" src="assets/icons/4373281_artstation_logo_logos_icon.png" alt="ArtStation Icon">
+      <img id="linkedinIcon" src="assets/icons/5296501_linkedin_network_linkedin_logo_icon.png" alt="LinkedIn Icon">
+      <img id="wixIcon" src="assets/icons/8547120_wix_icon.png" alt="Wix Icon">
       <a-asset-item id="businessCardModel" src="assets/models/BusinessCardBrandonMontezuma.glb"></a-asset-item>
     </a-assets>
 
     <!-- Add 3D Business Card -->
     <a-entity 
-      gltf-model="#businessCardModel" 
-      position="0 1 -4.5" 
-      rotation="0 -90 0" 
-      scale="0.5 0.5 0.5">
+        gltf-model="#businessCardModel" 
+        position="0 -0.7 -4.5" 
+        rotation="0 -90 0" 
+        scale="0.3 0.3 0.3">
     </a-entity>
 
-    <!-- Add Icons with Links -->
-    <a-image id="instagram" src="#instagramIcon" position="-1 1.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
-    <a-image id="email" src="#emailIcon" position="0 1.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
-    <a-image id="github" src="#githubIcon" position="1 1.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
-    <a-image id="artstation" src="#artstationIcon" position="-1 0.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
-    <a-image id="linkedin" src="#linkedinIcon" position="0 0.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
-    <a-image id="wix" src="#wixIcon" position="1 0.5 -3" scale="0.3 0.3 0.3" class="clickable"></a-image>
+    <!-- Add Icons with Correct Alignment -->
+    <a-image 
+        id="instagram" 
+        src="#instagramIcon" 
+        position="-1.2 0.5 -4.5" 
+        width="0.4" 
+        height="0.4" 
+        class="clickable">
+    </a-image>
+    <a-image 
+        id="email" 
+        src="#emailIcon" 
+        position="-1.2 -0.2 -4.5" 
+        width="0.4" 
+        height="0.4" 
+        class="clickable">
+    </a-image>
+    <a-image 
+        id="github" 
+        src="#githubIcon" 
+        position="-1.2 -0.9 -4.5" 
+        width="0.4" 
+        height="0.4" 
+        class="clickable">
+    </a-image>
+    <a-image 
+        id="artstation" 
+        src="#artstationIcon" 
+        position="1.2 0.5 -4.5" 
+        width="0.4" 
+        height="0.4" 
+        class="clickable">
+    </a-image>
+    <a-image 
+        id="linkedin" 
+        src="#linkedinIcon" 
+        position="1.2 -0.2 -4.5" 
+        width="0.4" 
+        height="0.4" 
+        class="clickable">
+    </a-image>
+    <a-image 
+        id="wix" 
+        src="#wixIcon" 
+        position="1.2 -0.9 -4.5" 
+        width="0.4" 
+        height="0.4" 
+        class="clickable">
+    </a-image>
 
     <!-- AR Camera -->
     <a-camera 
-      position="0 0 0" 
-      look-controls 
-      fov="60" 
-      near="0.01" 
-      far="1000">
+        position="0 0 0" 
+        look-controls 
+        fov="60" 
+        near="0.01" 
+        far="1000">
     </a-camera>
   </a-scene>
 
@@ -57,20 +99,11 @@
       function addIconClickListener(selector, url) {
         const icon = document.querySelector(selector);
         if (icon) {
-          // Debug: Add hover and click listeners
-          icon.addEventListener('mouseenter', () => {
-            console.log(`Hovered over: ${selector}`);
-          });
-
           icon.addEventListener('click', () => {
             console.log(`Opening URL: ${url}`);
             window.open(url, '_blank');
           });
-
-          // Debugging log: Successful listener attachment
-          console.log(`Event listener attached to ${selector}`);
         } else {
-          // Debugging log: Icon not found
           console.error(`Icon not found for selector: ${selector}`);
         }
       }
